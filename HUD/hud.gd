@@ -36,6 +36,13 @@ func _on_dog_hunger_changed(hunger: int) -> void:
 	$Controls/HungerBar.value = int(hunger)
 
 
+func _on_dog_energy_changed(energy: Variant) -> void:
+	$Controls/EnergyBar.value = int(energy)
+
+func _on_dog_fun_changed(fun: Variant) -> void:
+	$Controls/FunBar.value = int(fun)
+
+
 #TEMPORARY DEBUG BUTTONS - replace with real gameplay later lamayo
 func _on_foodbutton_pressed() -> void:
 	emit_signal("HUD_foodbutton_pressed")
@@ -48,11 +55,3 @@ func _on_showerbutton_pressed() -> void:
 
 func _on_playbutton_pressed() -> void:
 	emit_signal("HUD_playbutton_pressed")
-
-
-
-func _on_dog_energy_changed(energy: Variant) -> void:
-	$Controls/EnergyBar.value = int(energy)
-
-func _on_dog_fun_changed(fun: Variant) -> void:
-	$Controls/FunBar.value = int(fun)

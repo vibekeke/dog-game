@@ -48,7 +48,6 @@ func _physics_process(delta):
 		
 	if velocity.x != 0:
 		$AnimatedSprite2D.animation = "idle"
-		$AnimatedSprite2D.flip_v = false
 		$AnimatedSprite2D.flip_h = velocity.x > 0
 		
 	$AnimatedSprite2D.scale.x = move_toward($AnimatedSprite2D.scale.x, 1, 2 * delta)
@@ -73,15 +72,7 @@ func emit_all_stats():
 	
 	update_states_and_moods()
 
-
-func hunger_update():
-	#Note! If you never end up putting anything else inside of these update functions, they should be removed! 
-	#in that case, the signals can be emitted from the update_stats functions.
-	emit_signal("hunger_changed", hunger)
-	
-func energy_update():
-	emit_signal("energy_changed", energy)
-
+#Love is getting an extra function because it is such an important variable uwu
 func love_update():
 	if love > love_max:
 		love_ismax = true
@@ -89,16 +80,19 @@ func love_update():
 		love_ismax = false
 	emit_signal("love_changed", love, love_ismax, increased)
 
-func fun_update():
-	emit_signal("fun_changed", fun)
 
-#PETTING DECAY
-var petting_power = 1
-var petting_max = 20
-
-func _on_petting_cooldown_timeout() -> void:
-	if petting_counter > 0:
-		petting_counter -= 1
+#Changing the state and updating animation + key variables.
+func change_state(new_state):
+	dog_state = new_state
+	if dog_state == "Sleeping":
+		$AnimatedSprite2D.flip_v = true
+		move_enabled = false
+	if dog_state == "FallingAsleep":
+		move_enabled = true
+	if dog_state == "Idle":
+		$AnimatedSprite2D.flip_v = false
+		move_enabled = true
+		
 
 
 #STAT MANAGEMENT
@@ -109,19 +103,17 @@ var love_max = 50		#I imagine this stat will be updated so you can provide EVEN 
 var love_ismax = false
 var love_level = 0 		#Level updates when love has been max for a while
 
-var hunger_decayspeed = 2
-var hunger_max = 150
+var petting_power = 1
 
+var hunger_decayspeed = 2
 var energy_decayspeed = 1
-var energy_max = 100
 var sleep_countdown = 0
 var wake_countdown = 0
 
 var fun_decayspeed = 3
-var fun_max = 100
 
 var stress_decayspeed = 1
-var dirty_max = 100
+
 var poop_max = 20
 
 
@@ -139,22 +131,29 @@ func update_stats_on_timer() -> void:
 		love -= love_decayspeed
 		love_update()
 	
+	#Petting cooldown
+	if petting_counter > 0:
+		petting_counter -= 1
+	
 	#Hunger
 	if hunger > 0:
 		hunger -= hunger_decayspeed
-		hunger_update()
+		emit_signal("hunger_changed", hunger)
 	
 	#Energy
 	if energy > 0 and dog_state != "Sleeping":
 		energy -= energy_decayspeed
-		energy_update()
+		emit_signal("energy_changed", energy)
+
 	if energy < 100 and dog_state == "Sleeping":
 		energy += 3
-		energy_update()
+		emit_signal("energy_changed", energy)
 	
+	#Fun
 	if fun > 0:
 		fun -= fun_decayspeed
-		fun_update()
+		emit_signal("fun_changed", fun)
+
 
 #Initiating stat increases :D
 func love_increase(amount):
@@ -163,20 +162,15 @@ func love_increase(amount):
 		love += amount
 	love_update()
 
-func energy_increase(amount):
-	if energy < energy_max + 20:
-		energy += amount
-
 
 func _on_button_pressed() -> void:
 	$AnimatedSprite2D.scale = Vector2(1.2, 0.8)
-	if petting_counter <= (petting_max):
+	if petting_counter <= 15:
 		petting_counter += 1
-		if petting_counter <= (petting_max - 5):
+		if petting_counter <= 10:
 			love_increase(petting_power)
 
 
-'''this will be replaced by a super complex food item system later'''
 func _on_hud_hud_foodbutton_pressed() -> void:
 	if hunger < 130: 
 		change_state("Idle")
@@ -184,7 +178,7 @@ func _on_hud_hud_foodbutton_pressed() -> void:
 		hunger += 10
 		need_to_poop += 3
 		love_increase(5) #Should probably be a variable so we can add personality multiplyers :3
-	hunger_update()
+	emit_signal("hunger_changed", hunger)
 
 func _on_hud_hud_walkbutton_pressed() -> void:
 	if energy > 30:
@@ -193,8 +187,8 @@ func _on_hud_hud_walkbutton_pressed() -> void:
 		energy -= 30
 		fun += 20
 		need_to_poop = 0
-		energy_update()
-		fun_update()
+		emit_signal("energy_changed", energy)
+		emit_signal("fun_changed", fun)
 		love_increase(10)
 	else:
 		print("Energy too low for a walk!")
@@ -207,14 +201,14 @@ func _on_hud_hud_playbutton_pressed() -> void:
 		fun += 10
 		energy -= 10
 		love_increase(10)
-	energy_update()
-	fun_update()
+	emit_signal("energy_changed", energy)
+	emit_signal("fun_changed", fun)
 	
 	
 #POOPING
 func _on_poop_timer_timeout() -> void:
-	$AnimatedSprite2D.scale = Vector2(1, 1)
 	if need_to_poop >= poop_max and dog_state != "Sleeping":
+		$AnimatedSprite2D.scale = Vector2(1, 1)
 		emit_signal("time_to_poop")
 		need_to_poop = 0
 	else:
@@ -246,17 +240,3 @@ func update_states_and_moods():
 		print("Dog is asleep!")
 		change_state("Sleeping")
 		wake_countdown = randi_range(10, 50)
-
-#Changing the state and updating animation + key variables.
-#Behaviour should be handled somewhere else!
-func change_state(new_state):
-	dog_state = new_state
-	if dog_state == "Sleeping":
-		$AnimatedSprite2D.flip_v = true
-		move_enabled = false
-	if dog_state == "FallingAsleep":
-		move_enabled = true
-	if dog_state == "Idle":
-		$AnimatedSprite2D.flip_v = false
-		move_enabled = true
-		

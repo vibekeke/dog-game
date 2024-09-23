@@ -1,6 +1,6 @@
 extends Node2D
 
-var tiny_hearts = load("res://tiny_hearts.tscn")
+var tiny_hearts = load("res://Effects/tiny_hearts.tscn")
 var poop = load("res://poop.tscn")
 
 # Called when the node enters the scene tree for the first time.
@@ -12,7 +12,8 @@ func _process(delta: float) -> void:
 	pass
 
 
-#LOVE STATS
+#Spawns tiny hearts whenever love increases.
+#This is a bad system for it.
 func _on_dog_love_changed_home(love, love_ismax, increased) -> void:
 	var random_amount = randi_range(2, 4) #Skal endre dette til en verdi typ love_amount ellerno...
 	

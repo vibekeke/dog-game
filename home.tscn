@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://eknw1q5yoknu" path="res://Art/Møbler/room_pillows.webp" id="2_3ilki"]
 [ext_resource type="Texture2D" uid="uid://dfiqk3sk58mj4" path="res://Art/Møbler/room_plant.webp" id="3_awkx2"]
 [ext_resource type="PackedScene" uid="uid://cvuofhgxo0twx" path="res://dog.tscn" id="5_6eess"]
-[ext_resource type="PackedScene" uid="uid://bt4if4tr3t2bk" path="res://hud.tscn" id="5_q31hy"]
-[ext_resource type="PackedScene" uid="uid://ce8oq68vjabh0" path="res://effects_layer.tscn" id="6_v8hit"]
+[ext_resource type="PackedScene" uid="uid://bt4if4tr3t2bk" path="res://HUD/hud.tscn" id="5_q31hy"]
+[ext_resource type="PackedScene" uid="uid://ce8oq68vjabh0" path="res://Effects/effects_layer.tscn" id="6_v8hit"]
 
 [node name="Home" type="Node2D"]
 y_sort_enabled = true

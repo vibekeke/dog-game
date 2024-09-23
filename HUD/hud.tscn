@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bt4if4tr3t2bk"]
 
-[ext_resource type="Script" path="res://hud.gd" id="1_b0x6d"]
-[ext_resource type="PackedScene" uid="uid://1uq0ijfq8e2y" path="res://heart.tscn" id="1_l2dld"]
+[ext_resource type="Script" path="res://HUD/hud.gd" id="1_b0x6d"]
+[ext_resource type="PackedScene" uid="uid://1uq0ijfq8e2y" path="res://HUD/heart.tscn" id="1_l2dld"]
 [ext_resource type="FontFile" uid="uid://c74txg5256qut" path="res://Art/Xolonium-Regular.ttf" id="2_uevbp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_64iun"]

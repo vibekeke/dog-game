@@ -1,21 +1,21 @@
 [gd_scene load_steps=7 format=3 uid="uid://1uq0ijfq8e2y"]
 
-[ext_resource type="Texture2D" uid="uid://cppnuasiofk56" path="res://Art/Heart_Container_Original.png" id="1_um3mg"]
+[ext_resource type="Texture2D" uid="uid://cppnuasiofk56" path="res://Art/Heart_Container_Original.png" id="1_65dp2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b0f07"]
-atlas = ExtResource("1_um3mg")
+atlas = ExtResource("1_65dp2")
 region = Rect2(0, 0, 512, 512)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yt2by"]
-atlas = ExtResource("1_um3mg")
+atlas = ExtResource("1_65dp2")
 region = Rect2(512, 0, 512, 512)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kcwwr"]
-atlas = ExtResource("1_um3mg")
+atlas = ExtResource("1_65dp2")
 region = Rect2(0, 512, 512, 512)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m05nn"]
-atlas = ExtResource("1_um3mg")
+atlas = ExtResource("1_65dp2")
 region = Rect2(512, 512, 512, 512)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hasa7"]
