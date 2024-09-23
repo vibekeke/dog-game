@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://4c1i4d60uvic"]
+
+[ext_resource type="Script" path="res://poop.gd" id="1_6o603"]
+[ext_resource type="Texture2D" uid="uid://c521gep0ne18a" path="res://Art/Poop1.PNG" id="1_srghf"]
+[ext_resource type="Texture2D" uid="uid://bcawr0hljuwi8" path="res://Art/poop2.PNG" id="2_q1a1t"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3yrpr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_srghf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_q1a1t")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[node name="Poop" type="Node2D"]
+position = Vector2(-7, -39)
+script = ExtResource("1_6o603")
+
+[node name="AnimatedPoop2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(1, 0)
+sprite_frames = SubResource("SpriteFrames_3yrpr")
+frame_progress = 0.544118
+
+[node name="Button" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+self_modulate = Color(1, 1, 1, 0)
+offset_left = -16.0
+offset_top = -2.0
+offset_right = 31.0
+offset_bottom = 42.0
+pivot_offset = Vector2(26, 21)
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

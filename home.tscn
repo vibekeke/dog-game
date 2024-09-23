@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://nuau8n4py88y"]
+
+[ext_resource type="Script" path="res://home.gd" id="1_nt81k"]
+[ext_resource type="Texture2D" uid="uid://eknw1q5yoknu" path="res://Art/Møbler/room_pillows.webp" id="2_3ilki"]
+[ext_resource type="Texture2D" uid="uid://dfiqk3sk58mj4" path="res://Art/Møbler/room_plant.webp" id="3_awkx2"]
+[ext_resource type="PackedScene" uid="uid://cvuofhgxo0twx" path="res://dog.tscn" id="5_6eess"]
+[ext_resource type="PackedScene" uid="uid://bt4if4tr3t2bk" path="res://hud.tscn" id="5_q31hy"]
+[ext_resource type="PackedScene" uid="uid://ce8oq68vjabh0" path="res://effects_layer.tscn" id="6_v8hit"]
+
+[node name="Home" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_nt81k")
+
+[node name="RoomPillows" type="Sprite2D" parent="."]
+position = Vector2(618, 422)
+scale = Vector2(0.573416, 0.625419)
+texture = ExtResource("2_3ilki")
+offset = Vector2(-629.56, 271.818)
+
+[node name="RoomPlant" type="Sprite2D" parent="."]
+position = Vector2(438, 831)
+scale = Vector2(0.667035, 0.667035)
+texture = ExtResource("3_awkx2")
+offset = Vector2(0, -226.375)
+
+[node name="Dog" parent="." instance=ExtResource("5_6eess")]
+position = Vector2(349, 232)
+
+[node name="HUD" parent="." instance=ExtResource("5_q31hy")]
+
+[node name="EffectsLayer" parent="." instance=ExtResource("6_v8hit")]
+
+[connection signal="energy_changed" from="Dog" to="HUD" method="_on_dog_energy_changed"]
+[connection signal="fun_changed" from="Dog" to="HUD" method="_on_dog_fun_changed"]
+[connection signal="hunger_changed" from="Dog" to="HUD" method="_on_dog_hunger_changed"]
+[connection signal="love_changed" from="Dog" to="." method="_on_dog_love_changed_home"]
+[connection signal="love_changed" from="Dog" to="HUD" method="_on_dog_love_changed_HUD"]
+[connection signal="time_to_poop" from="Dog" to="." method="_on_dog_time_to_poop"]
+[connection signal="HUD_foodbutton_pressed" from="HUD" to="Dog" method="_on_hud_hud_foodbutton_pressed"]
+[connection signal="HUD_playbutton_pressed" from="HUD" to="Dog" method="_on_hud_hud_playbutton_pressed"]
+[connection signal="HUD_walkbutton_pressed" from="HUD" to="Dog" method="_on_hud_hud_walkbutton_pressed"]

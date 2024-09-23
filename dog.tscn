@@ -1,0 +1,51 @@
+[gd_scene load_steps=5 format=3 uid="uid://cvuofhgxo0twx"]
+
+[ext_resource type="Script" path="res://dog.gd" id="1_ipha4"]
+[ext_resource type="Texture2D" uid="uid://blwwd65qj7rob" path="res://Untitled_Artwork.png" id="2_dyiwf"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xm03h"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_dyiwf")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dmklv"]
+radius = 27.0
+height = 96.0
+
+[node name="Dog" type="CharacterBody2D"]
+script = ExtResource("1_ipha4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -23)
+sprite_frames = SubResource("SpriteFrames_xm03h")
+animation = &"idle"
+
+[node name="Button" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+self_modulate = Color(1, 1, 1, 0)
+offset_left = -50.0
+offset_top = -34.0
+offset_right = 58.0
+offset_bottom = 26.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, -14)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_dmklv")
+
+[node name="PoopTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="StatsTimer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="timeout" from="PoopTimer" to="." method="_on_poop_timer_timeout"]
+[connection signal="timeout" from="StatsTimer" to="." method="_on_stats_timer_timeout"]
