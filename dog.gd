@@ -63,9 +63,6 @@ func _physics_process(delta):
 		'''
 
 
-
-
-
 #STAT CHANGES
 func emit_all_stats():
 	emit_signal("love_changed", love, love_ismax, increased)
