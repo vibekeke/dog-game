@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+@onready var idleTimer = $IdleTimer
 #Movement variables
 var speed = 300
 var click_position = Vector2()
@@ -39,6 +40,11 @@ func _unhandled_input(event):
 	if Input.is_action_just_pressed("left_click") and move_enabled == true:
 		$AnimatedSprite2D.scale = Vector2(1.2, 0.8)
 		click_position = get_global_mouse_position()
+		
+		if dog_state == "Idle":
+			idleTimer.wait_time = randi_range(3, 5)
+			idleTimer.start()
+		
 
 func _physics_process(delta):
 	if position.distance_to(click_position) > 50:
@@ -61,6 +67,36 @@ func _physics_process(delta):
 			...Når hunden collider med cookie så blir den spist. Hvis hunden er mett må vi gjøre mere greier lol
 		'''
 
+func _on_idle_timer_timeout() -> void:
+	if dog_state == "Idle" or dog_state == "FallingAsleep":
+		var random_x = randi_range(-230, 230)
+		var random_y = randi_range(-300, 300)
+		var min_distance = 80
+		
+		#We want random movement, but not teeny tiny baby steps:
+		if abs(random_x) < min_distance:
+			if random_x >= 0:
+				random_x = min_distance
+			else:
+				random_x = -min_distance
+
+		if abs(random_y) < min_distance:
+			if random_y >= 0:
+				random_y = min_distance
+			else:
+				random_y = -min_distance
+
+		var new_x = clamp(global_position.x + random_x, 100, 480)
+		var new_y = clamp(global_position.y + random_y, 200, 800)
+		
+		var random_time = randi_range(2, 5)
+		print("Moving on x by" +  str(random_x))
+		print("Moving on y by" +  str(random_y))
+		click_position = Vector2(new_x, new_y)
+		idleTimer.wait_time = random_time
+		idleTimer.one_shot = true
+		idleTimer.start()
+		print("The current timer is set to " + str(random_time))
 
 #STAT CHANGES
 func emit_all_stats():
@@ -164,7 +200,7 @@ func love_increase(amount):
 
 
 func _on_button_pressed() -> void:
-	$AnimatedSprite2D.scale = Vector2(1.2, 0.8)
+	$AnimatedSprite2D.scale = Vector2(1.2, 0.9)
 	if petting_counter <= 15:
 		petting_counter += 1
 		if petting_counter <= 10:
@@ -217,8 +253,7 @@ func _on_poop_timer_timeout() -> void:
 #States and moods
 #Conditions for stats and moods
 ''' This function only handles change between states, i.e. going from eating to sleeping.
-Meaning, it checks for various conditions, and calls for a change in dog_state.
-Any changes in stats that result must be handled above!!'''
+Any changes in stats that result must be handled elsewhere!!'''
 func update_states_and_moods():
 	print("Current state is " + dog_state)
 	

@@ -19,21 +19,23 @@ animations = [{
 }]
 
 [node name="Poop" type="Node2D"]
-position = Vector2(-7, -39)
 script = ExtResource("1_6o603")
 
 [node name="AnimatedPoop2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(1, 0)
+texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_3yrpr")
 frame_progress = 0.544118
+offset = Vector2(-6, -37)
+metadata/_edit_group_ = true
 
 [node name="Button" type="Button" parent="."]
 modulate = Color(1, 1, 1, 0)
 self_modulate = Color(1, 1, 1, 0)
-offset_left = -16.0
-offset_top = -2.0
-offset_right = 31.0
-offset_bottom = 42.0
-pivot_offset = Vector2(26, 21)
+offset_left = -22.0
+offset_top = -40.0
+offset_right = 25.0
+offset_bottom = 4.0
+pivot_offset = Vector2(-19, 5)
+size_flags_vertical = 8
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
