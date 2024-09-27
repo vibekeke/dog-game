@@ -19,6 +19,7 @@ signal hunger_changed(hunger)
 signal energy_changed(energy)
 signal fun_changed(fun)
 signal time_to_poop()
+signal started_eating()
 
 
 #TIME BASED-STATS
@@ -52,7 +53,7 @@ func _physics_process(delta):
 		velocity = direction_vector * speed
 		move_and_slide() #We need to find a better system for this...
 		
-	if velocity.x != 0:
+	if velocity.x != 0 and dog_state != "Eating":
 		$AnimatedSprite2D.animation = "idle"
 		$AnimatedSprite2D.flip_h = velocity.x > 0
 		
@@ -128,8 +129,36 @@ func change_state(new_state):
 	if dog_state == "Idle":
 		$AnimatedSprite2D.flip_v = false
 		move_enabled = true
-		
+	if dog_state == "WantsToEat":
+		move_enabled = false
+	if dog_state == "Eating":
+		$AnimatedSprite2D.flip_v = false
+		$AnimatedSprite2D.flip_h = false
+		move_enabled = false
 
+''' This function only handles change between states, i.e. going from eating to sleeping.
+Any changes in stats that result must be handled elsewhere!!'''
+func update_states_and_moods():
+	print("Current state is " + dog_state)
+	
+	if energy == 0:
+		print("The dog passed out!")
+		change_state("Sleeping")
+		wake_countdown = randi_range(10, 20)
+	
+	if energy < 20 and dog_state == "Idle": #Vi adder også en variabel for inaktivitet hos spilleren
+		print("Dog is falling asleep!")
+		change_state("FallingAsleep")
+		sleep_countdown = randi_range(5, 10)
+	
+	if dog_state == "FallingAsleep":
+		print("Time to sleep: " + str(sleep_countdown))
+		sleep_countdown -= 1
+
+	if dog_state == "FallingAsleep" and sleep_countdown == 0:
+		print("Dog is asleep!")
+		change_state("Sleeping")
+		wake_countdown = randi_range(10, 50)
 
 #STAT MANAGEMENT
 var love_power = 1 #Number between 1 and 3: 1 is a normal amount, 2 is a lot of love, and 3 is super-love.
@@ -206,7 +235,7 @@ func _on_button_pressed() -> void:
 		if petting_counter <= 10:
 			love_increase(petting_power)
 
-
+'''
 func _on_hud_hud_foodbutton_pressed() -> void:
 	if hunger < 130: 
 		change_state("Idle")
@@ -215,6 +244,7 @@ func _on_hud_hud_foodbutton_pressed() -> void:
 		need_to_poop += 3
 		love_increase(5) #Should probably be a variable so we can add personality multiplyers :3
 	emit_signal("hunger_changed", hunger)
+'''
 
 func _on_hud_hud_walkbutton_pressed() -> void:
 	if energy > 30:
@@ -252,26 +282,14 @@ func _on_poop_timer_timeout() -> void:
 
 #States and moods
 #Conditions for stats and moods
-''' This function only handles change between states, i.e. going from eating to sleeping.
-Any changes in stats that result must be handled elsewhere!!'''
-func update_states_and_moods():
-	print("Current state is " + dog_state)
-	
-	if energy == 0:
-		print("The dog passed out!")
-		change_state("Sleeping")
-		wake_countdown = randi_range(10, 20)
-	
-	if energy < 20 and dog_state == "Idle": #Vi adder også en variabel for inaktivitet hos spilleren
-		print("Dog is falling asleep!")
-		change_state("FallingAsleep")
-		sleep_countdown = randi_range(5, 10)
-	
-	if dog_state == "FallingAsleep":
-		print("Time to sleep: " + str(sleep_countdown))
-		sleep_countdown -= 1
 
-	if dog_state == "FallingAsleep" and sleep_countdown == 0:
-		print("Dog is asleep!")
-		change_state("Sleeping")
-		wake_countdown = randi_range(10, 50)
+func _on_food_bowl_filled(position) -> void:
+	if hunger < 100 and dog_state == "Idle":
+		print("The dog wants the food!")
+		click_position = position
+		change_state("WantsToEat")
+
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	print("Started eating!")
+	change_state("Eating")
+	emit_signal("started_eating")

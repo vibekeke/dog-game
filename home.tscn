@@ -36,14 +36,17 @@ position = Vector2(349, 232)
 position = Vector2(190, 295)
 
 [node name="FoodBowl" parent="." instance=ExtResource("8_s1el2")]
-position = Vector2(124, 791)
+position = Vector2(254, 464)
 
 [connection signal="energy_changed" from="Dog" to="HUD" method="_on_dog_energy_changed"]
 [connection signal="fun_changed" from="Dog" to="HUD" method="_on_dog_fun_changed"]
 [connection signal="hunger_changed" from="Dog" to="HUD" method="_on_dog_hunger_changed"]
 [connection signal="love_changed" from="Dog" to="." method="_on_dog_love_changed_home"]
 [connection signal="love_changed" from="Dog" to="HUD" method="_on_dog_love_changed_HUD"]
+[connection signal="started_eating" from="Dog" to="FoodBowl" method="_on_dog_started_eating"]
 [connection signal="time_to_poop" from="Dog" to="." method="_on_dog_time_to_poop"]
 [connection signal="HUD_foodbutton_pressed" from="HUD" to="Dog" method="_on_hud_hud_foodbutton_pressed"]
+[connection signal="HUD_foodbutton_pressed" from="HUD" to="FoodBowl" method="_on_hud_hud_foodbutton_pressed"]
 [connection signal="HUD_playbutton_pressed" from="HUD" to="Dog" method="_on_hud_hud_playbutton_pressed"]
 [connection signal="HUD_walkbutton_pressed" from="HUD" to="Dog" method="_on_hud_hud_walkbutton_pressed"]
+[connection signal="filled" from="FoodBowl" to="Dog" method="_on_food_bowl_filled"]

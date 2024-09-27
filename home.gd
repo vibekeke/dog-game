@@ -30,8 +30,10 @@ func _on_dog_love_changed_home(love, love_ismax, increased) -> void:
 #POOPING
 func _on_dog_time_to_poop() -> void:
 	print("Should have pooped!")
+	var random_x = randi_range(-10, 10)
+	var random_y = randi_range(-10, 10)
 	var poop_instance = poop.instantiate()
-	var poop_position = $Dog.global_position + Vector2(0, -20) #Might have to get the dog somehow
+	var poop_position = $Dog.global_position + Vector2(random_x, random_y) #Might have to get the dog somehow
 	var poop_direction = $Dog/AnimatedSprite2D.flip_h
 	
 	if poop_direction == false:
