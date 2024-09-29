@@ -12,6 +12,8 @@ So far into development, you can
 - Clean up dog poop
 - Click the placeholder "play" and "go for walk" buttons to trade energy for fun
   These buttons are just placeholders for more complex mechanics to be implemented :3
+
+Dog/player script: https://github.com/vibekeke/dog-game/blob/main/dog.gd
   
 ![ezgif-7-7322ba25b8](https://github.com/user-attachments/assets/80212385-282f-49c2-af51-032ab3c4512f)
 ![ezgif-4-002ddb28ad](https://github.com/user-attachments/assets/82a09ad8-7a8b-489f-9b7d-70366764ec60)
