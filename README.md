@@ -4,6 +4,9 @@
 Started making a game about petting a dog, in order to learn Godot :)
 I want the game to feature some of my favorite game mechanics from nintendogs, the tamagotchi and other lifesim type games!
 
+  
+![ezgif-7-7322ba25b8](https://github.com/user-attachments/assets/80212385-282f-49c2-af51-032ab3c4512f)
+
 So far into development, you can
 - Pet the dog to make a stat called "love" increase
   (This updates a heart in the corner, and makes tiny hearts appear!)
@@ -14,6 +17,5 @@ So far into development, you can
   These buttons are just placeholders for more complex mechanics to be implemented :3
 
 Dog/player script: https://github.com/vibekeke/dog-game/blob/main/dog.gd
-  
-![ezgif-7-7322ba25b8](https://github.com/user-attachments/assets/80212385-282f-49c2-af51-032ab3c4512f)
+
 ![ezgif-4-002ddb28ad](https://github.com/user-attachments/assets/82a09ad8-7a8b-489f-9b7d-70366764ec60)
