@@ -136,7 +136,7 @@ func change_state(new_state):
 		$AnimatedSprite2D.flip_h = false
 		move_enabled = false
 
-''' This function only handles change between states, i.e. going from eating to sleeping.
+''' This function only handles change between states due to stats, i.e. going from eating to sleeping.
 Any changes in stats that result must be handled elsewhere!!'''
 func update_states_and_moods():
 	print("Current state is " + dog_state)
@@ -162,7 +162,7 @@ func update_states_and_moods():
 
 #STAT MANAGEMENT
 var love_power = 1 #Number between 1 and 3: 1 is a normal amount, 2 is a lot of love, and 3 is super-love.
-var love_decayspeed = 1
+var love_decayspeed = 0.2
 var love_minimum = 25 	#I imagine this stat can be updated so you won't lose all progress :) 
 var love_max = 50		#I imagine this stat will be updated so you can provide EVEN MORE LOVE!!
 var love_ismax = false
@@ -170,12 +170,12 @@ var love_level = 0 		#Level updates when love has been max for a while
 
 var petting_power = 1
 
-var hunger_decayspeed = 2
-var energy_decayspeed = 1
+var hunger_decayspeed = 0.2
+var energy_decayspeed = 0.2
 var sleep_countdown = 0
 var wake_countdown = 0
 
-var fun_decayspeed = 3
+var fun_decayspeed = 0.5
 
 var stress_decayspeed = 1
 
@@ -201,8 +201,11 @@ func update_stats_on_timer() -> void:
 		petting_counter -= 1
 	
 	#Hunger
-	if hunger > 0:
+	if hunger > 0 and dog_state != "Eating":
 		hunger -= hunger_decayspeed
+		emit_signal("hunger_changed", hunger)
+	if hunger < 110 and dog_state == "Eating":
+		hunger += 5
 		emit_signal("hunger_changed", hunger)
 	
 	#Energy
@@ -235,16 +238,6 @@ func _on_button_pressed() -> void:
 		if petting_counter <= 10:
 			love_increase(petting_power)
 
-'''
-func _on_hud_hud_foodbutton_pressed() -> void:
-	if hunger < 130: 
-		change_state("Idle")
-		$AnimatedSprite2D.scale = Vector2(1.2, 0.8)
-		hunger += 10
-		need_to_poop += 3
-		love_increase(5) #Should probably be a variable so we can add personality multiplyers :3
-	emit_signal("hunger_changed", hunger)
-'''
 
 func _on_hud_hud_walkbutton_pressed() -> void:
 	if energy > 30:
@@ -281,7 +274,7 @@ func _on_poop_timer_timeout() -> void:
 		need_to_poop += 1
 
 #States and moods
-#Conditions for stats and moods
+#Conditions for stats and moos
 
 func _on_food_bowl_filled(position) -> void:
 	if hunger < 100 and dog_state == "Idle":
@@ -293,3 +286,8 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 	print("Started eating!")
 	change_state("Eating")
 	emit_signal("started_eating")
+
+
+func _on_food_bowl_emptied() -> void:
+	if dog_state == "Eating":
+		change_state("Idle") #Noe galt skjer med hunden her.

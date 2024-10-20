@@ -107,6 +107,7 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_ojlsj")
 
 [node name="DepletionTimer" type="Timer" parent="."]
+wait_time = 0.5
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="timeout" from="DepletionTimer" to="." method="_on_depletion_timer_timeout"]
