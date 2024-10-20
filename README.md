@@ -10,11 +10,10 @@ I want the game to feature some of my favorite game mechanics from nintendogs, t
 So far into development, you can
 - Pet the dog to make a stat called "love" increase
   (This updates a heart in the corner, and makes tiny hearts appear!)
-- Feed the dog with a bowl (work in progress)
+- Feed the dog with a bowl
 - Watch the dog fall asleep when energy is low
 - Clean up dog poop
-- Click the placeholder "play" and "go for walk" buttons to trade energy for fun
-  These buttons are just placeholders for more complex mechanics to be implemented :3
+- Click the placeholder "play" and "go for walk" buttons to trade energy with fun!
 
 Dog/player script: https://github.com/vibekeke/dog-game/blob/main/dog.gd
 
