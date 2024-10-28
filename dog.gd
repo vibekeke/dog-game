@@ -152,13 +152,20 @@ func update_states_and_moods():
 		sleep_countdown = randi_range(5, 10)
 	
 	if dog_state == "FallingAsleep":
+		if sleep_countdown != 0:
+			print("Dog is asleep!")
+			change_state("Sleeping")
+			wake_countdown = randi_range(10, 50)
 		print("Time to sleep: " + str(sleep_countdown))
 		sleep_countdown -= 1
-
-	if dog_state == "FallingAsleep" and sleep_countdown == 0:
-		print("Dog is asleep!")
-		change_state("Sleeping")
-		wake_countdown = randi_range(10, 50)
+	
+	if dog_state == "Sleeping":
+		if wake_countdown == 0:
+			print("The dog woke up!")
+			change_state("Idle")
+		else:
+			wake_countdown -= 1
+		
 
 #STAT MANAGEMENT
 var love_power = 1 #Number between 1 and 3: 1 is a normal amount, 2 is a lot of love, and 3 is super-love.
@@ -274,8 +281,12 @@ func _on_poop_timer_timeout() -> void:
 		need_to_poop += 1
 
 #States and moods
-#Conditions for stats and moos
+#Conditions for stats and moods
 
+#TODO: FLytt signalene slik at bollen signaliserer til main, og main signaliserer til hunden.
+#Det vil gjøre det lettere å koble flere hunder på signalet senere. Kanskje til og med et globalt signal??
+#To måter hunden kan spise: if dog hunger > 70 and global.bowl_filled = true: Eat food
+#Og emit_signal("food_smell").
 func _on_food_bowl_filled(position) -> void:
 	if hunger < 100 and dog_state == "Idle":
 		print("The dog wants the food!")
