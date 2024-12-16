@@ -1,13 +1,13 @@
 # dog
  dog game
 
-Started making a game about petting a dog, in order to learn Godot :)
-I want the game to feature some of my favorite game mechanics from nintendogs, the tamagotchi and other lifesim type games!
+Made a prototype of a game about petting a dog, in order to learn Godot :)
+I wanted the game to feature some of my favorite game mechanics from nintendogs, the tamagotchi and other lifesim type games!
 
   
 ![ezgif-7-7322ba25b8](https://github.com/user-attachments/assets/80212385-282f-49c2-af51-032ab3c4512f)
 
-So far into development, you can
+At this point in development, you can
 - Pet the dog to make a stat called "love" increase
   (This updates a heart in the corner, and makes tiny hearts appear!)
 - Feed the dog with a bowl
