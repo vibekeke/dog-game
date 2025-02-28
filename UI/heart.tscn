@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://1uq0ijfq8e2y"]
+
+[ext_resource type="Texture2D" uid="uid://cppnuasiofk56" path="res://PlaceholderArt/Heart_Container_Original.png" id="1_65dp2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b0f07"]
+atlas = ExtResource("1_65dp2")
+region = Rect2(0, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yt2by"]
+atlas = ExtResource("1_65dp2")
+region = Rect2(512, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kcwwr"]
+atlas = ExtResource("1_65dp2")
+region = Rect2(0, 512, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m05nn"]
+atlas = ExtResource("1_65dp2")
+region = Rect2(512, 512, 512, 512)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hasa7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0f07")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yt2by")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kcwwr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m05nn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Heart" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_hasa7")
+frame_progress = 0.984417

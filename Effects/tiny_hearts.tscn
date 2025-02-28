@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://c3oup15tuin0u"]
 
-[ext_resource type="Texture2D" uid="uid://cppnuasiofk56" path="res://Art/Heart_Container_Original.png" id="1_iw2pn"]
+[ext_resource type="Texture2D" uid="uid://cppnuasiofk56" path="res://PlaceholderArt/Heart_Container_Original.png" id="1_iw2pn"]
 [ext_resource type="Script" path="res://Effects/tiny_hearts.gd" id="2_0eml2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0gnal"]

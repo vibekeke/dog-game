@@ -17,8 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Mouse="*res://autoloads/mouse.gd"
-Global="*res://Global.gd"
+Global="*res://Globals/Global.gd"
+TimeManager="*res://Globals/TimeManager.gd"
 
 [display]
 

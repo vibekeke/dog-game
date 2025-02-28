@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://nuau8n4py88y"]
 
 [ext_resource type="Script" path="res://home.gd" id="1_nt81k"]
-[ext_resource type="Texture2D" uid="uid://eknw1q5yoknu" path="res://Art/Møbler/room_pillows.webp" id="2_3ilki"]
-[ext_resource type="Texture2D" uid="uid://dfiqk3sk58mj4" path="res://Art/Møbler/room_plant.webp" id="3_awkx2"]
-[ext_resource type="PackedScene" uid="uid://cvuofhgxo0twx" path="res://dog.tscn" id="5_6eess"]
-[ext_resource type="PackedScene" uid="uid://bt4if4tr3t2bk" path="res://HUD/hud.tscn" id="5_q31hy"]
+[ext_resource type="Texture2D" uid="uid://eknw1q5yoknu" path="res://PlaceholderArt/Møbler/room_pillows.webp" id="2_3ilki"]
+[ext_resource type="Texture2D" uid="uid://dfiqk3sk58mj4" path="res://PlaceholderArt/Møbler/room_plant.webp" id="3_awkx2"]
+[ext_resource type="PackedScene" uid="uid://cvuofhgxo0twx" path="res://Dogs/dog.tscn" id="5_6eess"]
+[ext_resource type="PackedScene" uid="uid://bt4if4tr3t2bk" path="res://UI/hud.tscn" id="5_q31hy"]
 [ext_resource type="PackedScene" uid="uid://ce8oq68vjabh0" path="res://Effects/effects_layer.tscn" id="6_v8hit"]
 [ext_resource type="PackedScene" uid="uid://7ud6e3sa7p5r" path="res://foodbowl.tscn" id="8_s1el2"]
 
