@@ -1,11 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://bt4if4tr3t2bk"]
+[gd_scene load_steps=6 format=3 uid="uid://bt4if4tr3t2bk"]
 
 [ext_resource type="Script" path="res://UI/hud.gd" id="1_b0x6d"]
 [ext_resource type="PackedScene" uid="uid://1uq0ijfq8e2y" path="res://UI/heart.tscn" id="1_l2dld"]
 [ext_resource type="FontFile" uid="uid://c74txg5256qut" path="res://PlaceholderArt/Xolonium-Regular.ttf" id="2_uevbp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_64iun"]
-bg_color = Color(0.539844, 0.711058, 0.54643, 1)
+bg_color = Color(0.469547, 0.72323, 0.598484, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gjdwk"]
+bg_color = Color(0.735303, 0.629549, 0.389126, 1)
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_b0x6d")
@@ -38,62 +41,29 @@ offset_bottom = 40.0
 layout_mode = 0
 offset_left = 33.0
 offset_top = 69.0
-offset_right = 197.0
+offset_right = 194.0
 offset_bottom = 96.0
-theme_override_styles/fill = SubResource("StyleBoxFlat_64iun")
-value = 100.0
-
-[node name="EnergyBar" type="ProgressBar" parent="Controls"]
-layout_mode = 0
-offset_left = 32.0
-offset_top = 127.0
-offset_right = 196.0
-offset_bottom = 154.0
 theme_override_styles/fill = SubResource("StyleBoxFlat_64iun")
 value = 100.0
 
 [node name="FunBar" type="ProgressBar" parent="Controls"]
 layout_mode = 0
 offset_left = 31.0
-offset_top = 182.0
+offset_top = 127.0
 offset_right = 195.0
-offset_bottom = 209.0
+offset_bottom = 154.0
 theme_override_styles/fill = SubResource("StyleBoxFlat_64iun")
 value = 100.0
 
-[node name="foodbutton" type="Button" parent="Controls"]
+[node name="EnergyBar" type="ProgressBar" parent="Controls"]
 layout_mode = 0
-offset_left = 34.0
-offset_top = 823.0
-offset_right = 128.0
-offset_bottom = 923.0
-text = "GIVE 
-FOOD"
-
-[node name="walkbutton" type="Button" parent="Controls"]
-layout_mode = 0
-offset_left = 280.0
-offset_top = 823.0
-offset_right = 379.0
-offset_bottom = 923.0
-text = "GO FOR 
-WALK"
-
-[node name="showerbutton" type="Button" parent="Controls"]
-layout_mode = 0
-offset_left = 411.0
-offset_top = 823.0
-offset_right = 505.0
-offset_bottom = 923.0
-text = "SHOWER"
-
-[node name="playbutton" type="Button" parent="Controls"]
-layout_mode = 0
-offset_left = 158.0
-offset_top = 823.0
-offset_right = 252.0
-offset_bottom = 923.0
-text = "PLAY"
+offset_left = 32.0
+offset_top = 185.0
+offset_right = 196.0
+offset_bottom = 206.0
+theme_override_font_sizes/font_size = 12
+theme_override_styles/fill = SubResource("StyleBoxFlat_gjdwk")
+value = 100.0
 
 [node name="Label" type="Label" parent="Controls"]
 layout_mode = 0
@@ -111,7 +81,7 @@ offset_top = 100.0
 offset_right = 82.0
 offset_bottom = 123.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Energy:"
+text = "Fun:"
 
 [node name="Label3" type="Label" parent="Controls"]
 layout_mode = 0
@@ -120,15 +90,9 @@ offset_top = 160.0
 offset_right = 83.0
 offset_bottom = 183.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Fun:"
+text = "Energy: "
 
 [connection signal="mouse_entered" from="LoveLabel" to="." method="_on_love_label_mouse_entered"]
 [connection signal="mouse_exited" from="LoveLabel" to="." method="_on_love_label_mouse_exited"]
 [connection signal="mouse_entered" from="Controls" to="." method="_on_controls_mouse_entered"]
 [connection signal="mouse_exited" from="Controls" to="." method="_on_controls_mouse_exited"]
-[connection signal="pressed" from="Controls/foodbutton" to="." method="_on_foodbutton_pressed"]
-[connection signal="pressed" from="Controls/walkbutton" to="." method="_on_walkbutton_pressed"]
-[connection signal="pressed" from="Controls/showerbutton" to="." method="_on_showerbutton_pressed"]
-[connection signal="mouse_entered" from="Controls/playbutton" to="." method="_on_playbutton_mouse_entered"]
-[connection signal="mouse_exited" from="Controls/playbutton" to="." method="_on_playbutton_mouse_exited"]
-[connection signal="pressed" from="Controls/playbutton" to="." method="_on_playbutton_pressed"]
