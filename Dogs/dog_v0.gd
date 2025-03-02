@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@export var sprite_size = 0.2
+
 @onready var idleTimer = $IdleTimer
 #Movement variables
 var speed = 300
@@ -39,7 +41,7 @@ func _ready():
 
 func _unhandled_input(event):
 	if Input.is_action_just_pressed("left_click") and move_enabled == true:
-		$AnimatedSprite2D.scale = Vector2(1.2, 0.8)
+		$AnimatedSprite2D.scale = Vector2(sprite_size + 0.2, sprite_size - 0.2)
 		click_position = get_global_mouse_position()
 		
 		if dog_state == "Idle":
@@ -57,8 +59,8 @@ func _physics_process(delta):
 		$AnimatedSprite2D.animation = "idle"
 		$AnimatedSprite2D.flip_h = velocity.x > 0
 		
-	$AnimatedSprite2D.scale.x = move_toward($AnimatedSprite2D.scale.x, 1, 2 * delta)
-	$AnimatedSprite2D.scale.y = move_toward($AnimatedSprite2D.scale.x, 1, 2 * delta)
+	$AnimatedSprite2D.scale.x = move_toward($AnimatedSprite2D.scale.x, sprite_size, 2 * delta)
+	$AnimatedSprite2D.scale.y = move_toward($AnimatedSprite2D.scale.x, sprite_size, 2 * delta)
 		
 	'''
 		#If COOKIE ON SCREEN:

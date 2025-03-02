@@ -2,7 +2,7 @@ extends Node
 
 var last_recorded_time: float
 var current_time : float
-var update_interval : float = 30.0
+var update_interval : float = 1.0
 var time_passed
 
 @onready var update_timer = Timer.new()

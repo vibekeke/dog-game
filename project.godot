@@ -24,6 +24,7 @@ TimeManager="*res://Globals/TimeManager.gd"
 
 window/size/viewport_width=540
 window/size/viewport_height=1000
+window/stretch/mode="viewport"
 
 [input]
 

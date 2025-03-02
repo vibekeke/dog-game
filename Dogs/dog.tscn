@@ -1,17 +1,22 @@
 [gd_scene load_steps=7 format=3 uid="uid://cvuofhgxo0twx"]
 
 [ext_resource type="Script" path="res://Dogs/dog.gd" id="1_ipha4"]
-[ext_resource type="Texture2D" uid="uid://blwwd65qj7rob" path="res://Dogs/Untitled_Artwork.png" id="2_dyiwf"]
 [ext_resource type="Script" path="res://Dogs/StateMachine/state_playing.gd" id="2_onj0j"]
+[ext_resource type="Texture2D" uid="uid://ddw23lsqfvn4s" path="res://Dogs/Dog Sprites/Illustration4.png" id="3_g4qb7"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xm03h"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_dyiwf")
+"texture": ExtResource("3_g4qb7")
 }],
 "loop": true,
 "name": &"idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"new_animation",
 "speed": 5.0
 }]
 
@@ -45,6 +50,8 @@ script = ExtResource("2_onj0j")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
+position = Vector2(12, -104)
+scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_xm03h")
 animation = &"idle"
 offset = Vector2(-8, -34)

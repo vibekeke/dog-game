@@ -39,7 +39,7 @@ func _on_dog_fun_changed(fun: Variant) -> void:
 
 
 
-func _on_dog_stats_updated(love, hunger, energy, fun) -> void:
+func _on_dog_stats_updated(decay_stats, love) -> void:
 	#We need to send all the stats
 	#Might be complicated with all the dogs...
 	print("HUD updated")
@@ -49,6 +49,6 @@ func _on_dog_stats_updated(love, hunger, energy, fun) -> void:
 		$LoveLabel.text = "MAX"
 		$Heart.scale = Vector2(0.5, 0.5)
 
-	$Controls/HungerBar.value = int(hunger)
-	$Controls/EnergyBar.value = int(energy)
-	$Controls/FunBar.value = int(fun)
+	$Controls/HungerBar.value = decay_stats["hunger"]["value"]
+	$Controls/EnergyBar.value = decay_stats["energy"]["value"]
+	$Controls/FunBar.value = decay_stats["fun"]["value"]

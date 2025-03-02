@@ -39,6 +39,7 @@ func _on_dog_stat_increased(stat: String) -> void:
 		var random_amount = randi_range(2, 4) #Skal endre dette til en verdi typ love_amount ellerno...
 		
 		for i in randi_range(1, 3):
+			await get_tree().create_timer(randf_range(0.0, 0.1)).timeout
 			var tiny_hearts_instance = tiny_hearts.instantiate()
 			var tiny_hearts_position = $Dog.global_position
 			$EffectsLayer.add_child(tiny_hearts_instance)
