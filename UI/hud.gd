@@ -42,7 +42,6 @@ func _on_dog_fun_changed(fun: Variant) -> void:
 func _on_dog_stats_updated(decay_stats, love) -> void:
 	#We need to send all the stats
 	#Might be complicated with all the dogs...
-	print("HUD updated")
 	$LoveLabel.text = str(love)
 
 	if love > 50:

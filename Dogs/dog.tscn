@@ -1,14 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://cvuofhgxo0twx"]
+[gd_scene load_steps=10 format=3 uid="uid://cvuofhgxo0twx"]
 
 [ext_resource type="Script" path="res://Dogs/dog.gd" id="1_ipha4"]
-[ext_resource type="Script" path="res://Dogs/StateMachine/state_playing.gd" id="2_onj0j"]
-[ext_resource type="Texture2D" uid="uid://ddw23lsqfvn4s" path="res://Dogs/Dog Sprites/Illustration4.png" id="3_g4qb7"]
+[ext_resource type="Script" path="res://Dogs/StateMachine/state_machine.gd" id="2_je2d1"]
+[ext_resource type="Script" path="res://Dogs/StateMachine/sleep_state.gd" id="3_i35uo"]
+[ext_resource type="Texture2D" uid="uid://blwwd65qj7rob" path="res://Dogs/Untitled_Artwork.png" id="4_h0tuj"]
+[ext_resource type="Script" path="res://Dogs/StateMachine/idle_state.gd" id="4_p1ps6"]
+[ext_resource type="Script" path="res://Dogs/StateMachine/eat_state.gd" id="5_54gw0"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xm03h"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_g4qb7")
+"texture": ExtResource("4_h0tuj")
 }],
 "loop": true,
 "name": &"idle",
@@ -31,27 +34,27 @@ height = 118.0
 [node name="Dog" type="CharacterBody2D"]
 script = ExtResource("1_ipha4")
 
+[node name="TickTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="IdleTimer" type="Timer" parent="."]
+one_shot = true
+
 [node name="StateMachine" type="Node" parent="."]
+script = ExtResource("2_je2d1")
 
-[node name="StateIdle" type="Node" parent="StateMachine"]
+[node name="SleepState" type="Node" parent="StateMachine"]
+script = ExtResource("3_i35uo")
 
-[node name="StateGoToSleep" type="Node" parent="StateMachine"]
+[node name="IdleState" type="Node" parent="StateMachine"]
+script = ExtResource("4_p1ps6")
 
-[node name="StateSleeping" type="Node" parent="StateMachine"]
-
-[node name="StateGoToFood" type="Node" parent="StateMachine"]
-
-[node name="StateEating" type="Node" parent="StateMachine"]
-
-[node name="StatePooping" type="Node" parent="StateMachine"]
-
-[node name="StatePlaying" type="Node" parent="StateMachine"]
-script = ExtResource("2_onj0j")
+[node name="EatState" type="Node" parent="StateMachine"]
+script = ExtResource("5_54gw0")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(12, -104)
-scale = Vector2(0.5, 0.5)
+position = Vector2(-1, -2)
 sprite_frames = SubResource("SpriteFrames_xm03h")
 animation = &"idle"
 offset = Vector2(-8, -34)
@@ -68,13 +71,12 @@ position = Vector2(0, -27)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_dmklv")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="InteractionArea2D" type="Area2D" parent="."]
 
-[node name="InteractionCollision" type="CollisionShape2D" parent="Area2D"]
+[node name="InteractionCollision" type="CollisionShape2D" parent="InteractionArea2D"]
 position = Vector2(-2, -33)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_uy51d")
 
-[connection signal="pressed" from="DogButton" to="." method="_on_dog_button_pressed"]
 [connection signal="pressed" from="DogButton" to="." method="_on_button_pressed"]
-[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="pressed" from="DogButton" to="." method="_on_dog_button_pressed"]

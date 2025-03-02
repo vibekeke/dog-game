@@ -5,7 +5,7 @@ var poop = load("res://Dogs/poop.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	Global.dog_pooped.connect(_on_dog_pooped)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -14,22 +14,28 @@ func _process(delta: float) -> void:
 
 
 #POOPING
-func _on_dog_time_to_poop() -> void:
-	print("Should have pooped!")
-	var random_x = randi_range(-10, 10)
-	var random_y = randi_range(-10, 10)
+func _on_dog_pooped(poop_position):
 	var poop_instance = poop.instantiate()
-	var poop_position = $Dog.global_position + Vector2(random_x, random_y) #Might have to get the dog somehow
-	var poop_direction = $Dog/AnimatedSprite2D.flip_h
-	
-	if poop_direction == false:
-		poop_position += Vector2(80, -10)
-	else:
-		poop_position -= Vector2(80, 10)
-	
 	self.add_child(poop_instance)
 	poop_instance.global_position = poop_position
 
+#func _on_dog_time_to_poop() -> void:
+	#print("Should have pooped!")
+	#var random_x = randi_range(-10, 10)
+	#var random_y = randi_range(-10, 10)
+	#var poop_instance = poop.instantiate()
+	#var poop_position = $Dog.global_position + Vector2(random_x, random_y) #Might have to get the dog somehow
+	#var poop_direction = $Dog/AnimatedSprite2D.flip_h
+	#
+	#if poop_direction == false:
+		#poop_position == Vector2(80, -10)
+	#else:
+		#poop_position -= Vector2(80, 10)
+	#
+	#
+	#self.add_child(poop_instance)
+	#poop_instance.global_position = poop_position
+#
 
 
 #Spawns tiny hearts whenever love increases.

@@ -2,7 +2,7 @@ extends Node
 
 var last_recorded_time: float
 var current_time : float
-var update_interval : float = 1.0
+var update_interval : float = 30.0
 var time_passed
 
 @onready var update_timer = Timer.new()
@@ -14,7 +14,6 @@ signal time_updated(time_passed)
 func _ready() -> void:
 	last_recorded_time = int(Time.get_unix_time_from_system())
 	current_time = int(Time.get_unix_time_from_system())
-	print(current_time)
 	
 	add_child(update_timer)
 	update_timer.wait_time = update_interval
@@ -36,8 +35,6 @@ func _on_update_timer_timeout():
 		return
 	
 	last_recorded_time = current_time
-	
-	print("time passed naturally: " + str(time_passed))
 	emit_signal("time_updated", time_passed)
 	
 func debug_time_changed(time_passed):
