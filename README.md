@@ -2,7 +2,7 @@
  dog game
 
 Made a prototype of a game about petting a dog, in order to learn Godot :)
-I wanted the game to feature some of my favorite game mechanics from nintendogs, the tamagotchi and other lifesim type games!
+I want the game to feature some of my favorite game mechanics from nintendogs, the tamagotchi and other lifesim type games!
 
   
 ![ezgif-7-7322ba25b8](https://github.com/user-attachments/assets/80212385-282f-49c2-af51-032ab3c4512f)
