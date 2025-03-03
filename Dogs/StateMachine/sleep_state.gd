@@ -26,7 +26,6 @@ func _enter_state() -> void:
 
 func _exit_state():
 	sleep_timer.stop()
-	print("exited sleep state")
 	dog.can_move = true
 	dog.sprite.flip_v = false
 	dog.decay_stats["energy"]["decaying"] = true

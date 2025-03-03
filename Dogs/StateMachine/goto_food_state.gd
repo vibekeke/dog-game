@@ -40,6 +40,9 @@ func _exit_state() -> void:
 	#pass
 
 func search_for_food():
+	if dog.get_stat("hunger") >= 120:
+		state_machine.request_state("idle")
+	
 	if FoodManager.available_foods.size() > 0:
 		target_food = find_closest_food()
 		dog.target_position = target_food.global_position
@@ -47,8 +50,15 @@ func search_for_food():
 		state_machine.request_state("idle")
 	
 	if target_food:
-		await target_food.food_entered
-		await get_tree().create_timer(1.0).timeout
+		#Apparently this is a common workaround to prevent multiple connections lmao
+		if target_food.food_entered.is_connected(_on_food_entered):
+			target_food.food_entered.disconnect(_on_food_entered)
+			
+		target_food.food_entered.connect(_on_food_entered, CONNECT_ONE_SHOT)
+
+func _on_food_entered(food, entered_dog):
+	if food == target_food and entered_dog == dog:
+		await get_tree().create_timer(0.2).timeout
 		state_machine.request_state("eat")
 
 func find_closest_food():

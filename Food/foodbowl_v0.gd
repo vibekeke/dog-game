@@ -1,15 +1,17 @@
 extends StaticBody2D
 
-@onready var depletionTimer = $DepletionTimer
+@onready var depletion_timer = $DepletionTimer
 	
 var bowl_fullness = 0
+var bowl_filled = false
+var bowl_health = 10
+var depletion_speed = 0
 
+
+var registered_dogs = []
 var eating_dogs = [] #find a better variable name
 
-signal filled
-signal emptied
-
-signal food_entered(food)
+signal food_entered
 
 func _ready() -> void:
 	update_bowl_animation()
@@ -22,9 +24,8 @@ func fill_bowl() -> void:
 	bowl_fullness = 10
 	update_bowl_animation()
 	FoodManager.register_food(self)
-	emit_signal("food_entered", self)
 	if eating_dogs.size() > 0:
-		deplete_food()
+		state_deplete_food()
 	#var anchor_position = $BowlAnchorA.global_position
 	#emit_signal("filled", anchor_position)
 
@@ -34,31 +35,46 @@ func fill_bowl() -> void:
 	#update_eating_animation()
 	#depletionTimer.start()
 
-
 func _on_depletion_timer_timeout() -> void:
-	deplete_food()
+	state_deplete_food()
+	check_eating_dogs()
 
-func deplete_food():
+func state_deplete_food():
 	if bowl_fullness > 0:
 		bowl_fullness -= 1
 		eating_animation()
-		depletionTimer.start()
+		depletion_timer.start()
 	else:
-		for dog in eating_dogs:
-			dog.state_machine.request_state("idle")
+		state_bowl_empty()
+
+func state_bowl_empty():
+	for dog in eating_dogs:
+		dog.state_machine.request_state("idle")
 		
 		update_bowl_animation()
-		depletionTimer.stop()
+		FoodManager.deregister_food(self)
+		depletion_timer.stop()
+
+
+func check_eating_dogs():
+	eating_dogs = eating_dogs.filter(func(dog): return dog.state_machine.current_state == EatState)
 	
-	print(bowl_fullness)
+	for dog in registered_dogs:
+		if dog.state_machine.current_state == EatState and dog not in eating_dogs:
+			eating_dogs.append(dog)
+	
+	if eating_dogs.size() > 0:
+		depletion_timer.wait_time = 1 / eating_dogs.size()
+	else:
+		depletion_timer.wait_time = 1
+	
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	if area.get_parent().state_machine.current_state is GotoFoodState:
 		print("Dog is eligible! Please refactor this code when it's not 4.am")
 		##await area.get_parent().started_eating
 		#I think this thing will be goooood
-	emit_signal("food_entered", self)
-	deplete_food()
+	state_deplete_food()
 	register_dog(area)
 
 func _on_area_2d_area_exited(area: Area2D) -> void:
@@ -70,6 +86,16 @@ func unregister_dog(area: Area2D):
 
 func register_dog(area: Area2D):
 	eating_dogs.append(area.get_parent()) #Adds the dog to the script
+
+
+
+
+
+
+
+
+
+
 
 
 func update_bowl_animation():

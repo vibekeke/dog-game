@@ -4,6 +4,7 @@ extends CharacterBody2D
 @onready var tick_timer = $TickTimer
 @onready var state_machine = $StateMachine
 
+
 var move_speed = 300
 var move_multiplier = 1.0 #should be affected by moods and personality UwU
 
@@ -21,9 +22,9 @@ var last_position = Vector2()
 var stat_max = 120
 
 signal pooped
-signal stats_updated(decay_stats, love) #TODO: HUD will fetch stats from DogManager, not the dog script!
-signal stat_increased(stat: String) #For visual effects purposes (EffectsLayer!)
-signal stat_decreased(stat: String) #For visual effects purposes (EffectsLayer!)
+signal stats_updated(dog) #TODO: HUD will fetch stats from DogManager, not the dog script!
+signal stat_increased(dog, stat: String) #For visual effects purposes (EffectsLayer!)
+signal stat_decreased(dog, stat: String) #For visual effects purposes (EffectsLayer!)
 
 
 var decay_stats = {
@@ -64,18 +65,26 @@ var love_max = 50
 
 
 func _ready():
+	set_process_input(true)
 	TimeManager.time_updated.connect(_on_time_updated)
 	tick_timer.timeout.connect(_on_tick_timer_timeout)
 	
 	target_position = position
-	set_process_input(true)
+	last_position = position
 
 	sprite.animation = "idle"
-	last_position = position
 	
-	emit_signal("stats_updated", decay_stats, love)	#TODO: Remove parameters in favor of DogManager
+	frequent_poop_rate()
+	
+	emit_signal("stats_updated", self)	#TODO: Remove parameters in favor of DogManager
 
 var stuck_timer = 0
+
+func frequent_poop_rate():
+	#for youtube shorts! :3
+	var rand = randi_range(50, 80)
+	set_stat("poop_level", rand)
+	multipliers["poop_level"]["decay_speed"] = rand / 40
 
 func _physics_process(delta):
 	if position.distance_to(target_position) > 50 and can_move:
@@ -122,8 +131,8 @@ func pet_dog():
 	tween_bounce()
 	if love < love_max:
 		love += 1
-		emit_signal("stats_updated", decay_stats, love) #TODO: Remove parameters in favor of DogManager
-		emit_signal("stat_increased", "love")
+		emit_signal("stats_updated", self) #TODO: Remove parameters in favor of DogManager
+		emit_signal("stat_increased", self, "love")
 
 ##TIME STUFF
 func _on_time_updated(time_passed):
@@ -135,11 +144,11 @@ func _on_time_updated(time_passed):
 		var stat = decay_stats[key] #opens the stat dictionary
 		if stat["decaying"]:
 			var decay_amount = -((multipliers[key]["pers_multiplier"] + multipliers[key]["decay_multiplier"]) / 2) * multipliers[key]["decay_speed"]
-			set_stat(key, time_passed * decay_amount)
+			change_stat(key, time_passed * decay_amount)
 				
 				
 	#TODO: stats always decay (decaying = true), this will change based on state machines so they dont get tired while eating etc :3
-	emit_signal("stats_updated", decay_stats, love)	#TODO: Remove parameters in favor of DogManager
+	emit_signal("stats_updated", self)	#TODO: Remove parameters in favor of DogManager
 
 
 func handle_long_awaytime():
@@ -150,14 +159,18 @@ func handle_long_awaytime():
 func _on_tick_timer_timeout():
 	for key in decay_stats:
 		if decay_stats[key]["increasing"]:
-			print("increasing: " + key)
+			#print("increasing: " + key)
 			var gain_amount = (multipliers[key]["gain_multiplier"]) * multipliers[key]["gain_speed"]
-			set_stat(key, gain_amount)
-			emit_signal("stat_increased", key)
-	emit_signal("stats_updated", decay_stats, love)
+			change_stat(key, gain_amount)
+			emit_signal("stat_increased",self, key)
+	emit_signal("stats_updated", self)
 
 
 func set_stat(stat_name: String, value):
+	decay_stats[stat_name]["value"] = value
+	decay_stats[stat_name]["value"] = clamp(decay_stats[stat_name]["value"], 0, 120)
+	
+func change_stat(stat_name: String, value):
 	decay_stats[stat_name]["value"] += value
 	decay_stats[stat_name]["value"] = clamp(decay_stats[stat_name]["value"], 0, 120)
 
@@ -198,13 +211,12 @@ func _on_debug_stats_debug_button_pressed(type: String, value: float) -> void:
 		"play":
 			return
 		"hunger":
-			set_stat("hunger", value)
+			change_stat("hunger", value)
 		"fun":
-			set_stat("fun", value)
+			change_stat("fun", value)
 		"energy":
-			set_stat("energy", value)
+			change_stat("energy", value)
 		_:
 			print("Nothing changed")
 		
-	print(get_stat("hunger"))
-	emit_signal("stats_updated", decay_stats, love)
+	emit_signal("stats_updated", self)

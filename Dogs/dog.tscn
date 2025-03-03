@@ -3,16 +3,16 @@
 [ext_resource type="Script" path="res://Dogs/dog.gd" id="1_ipha4"]
 [ext_resource type="Script" path="res://Dogs/StateMachine/state_machine.gd" id="2_je2d1"]
 [ext_resource type="Script" path="res://Dogs/StateMachine/sleep_state.gd" id="3_i35uo"]
-[ext_resource type="Texture2D" uid="uid://blwwd65qj7rob" path="res://Dogs/Untitled_Artwork.png" id="4_h0tuj"]
 [ext_resource type="Script" path="res://Dogs/StateMachine/idle_state.gd" id="4_p1ps6"]
 [ext_resource type="Script" path="res://Dogs/StateMachine/eat_state.gd" id="5_54gw0"]
 [ext_resource type="Script" path="res://Dogs/StateMachine/goto_food_state.gd" id="6_aho42"]
+[ext_resource type="Texture2D" uid="uid://ddw23lsqfvn4s" path="res://Dogs/Dog Sprites/Illustration4.png" id="7_5o3ao"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xm03h"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_h0tuj")
+"texture": ExtResource("7_5o3ao")
 }],
 "loop": true,
 "name": &"idle",
@@ -55,7 +55,8 @@ script = ExtResource("6_aho42")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(-1, -2)
+position = Vector2(9, -101)
+scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_xm03h")
 animation = &"idle"
 offset = Vector2(-8, -34)

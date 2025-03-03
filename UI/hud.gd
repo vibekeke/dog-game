@@ -2,13 +2,26 @@ extends CanvasLayer
 
 @onready var love_label = $LoveLabel
 @onready var hunger_bar = $Controls/HungerBar
+@onready var home = $".."	#Just for testing
 var heart_size = 0.25
 
+@onready var dog1 = $"../Dog"
+@onready var dog2 = $"../Dog2"
+@onready var dog3 = $"../Dog3"
+@onready var dog4 = $"../Dog4"
+
+var active_dogs = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$LoveLabel.text = "0"
 	$Heart.scale = Vector2(0.25, 0.25)
+	
+	##Now all the dogs are connected to the same hud, which might look strange but is good for youtube shorts
+	active_dogs = [dog1, dog2, dog3, dog4]	
+	for dog in active_dogs:
+		print("dog in home")
+		dog.stats_updated.connect(_on_dog_stats_updated)
 
 
 '''
@@ -39,15 +52,15 @@ func _on_dog_fun_changed(fun: Variant) -> void:
 
 
 
-func _on_dog_stats_updated(decay_stats, love) -> void:
+func _on_dog_stats_updated(dog) -> void:
 	#We need to send all the stats
 	#Might be complicated with all the dogs...
-	$LoveLabel.text = str(love)
+	$LoveLabel.text = str(dog.love)
 
-	if love > 50:
+	if dog.love > 50:
 		$LoveLabel.text = "MAX"
 		$Heart.scale = Vector2(0.5, 0.5)
 
-	$Controls/HungerBar.value = decay_stats["hunger"]["value"]
-	$Controls/EnergyBar.value = decay_stats["energy"]["value"]
-	$Controls/FunBar.value = decay_stats["fun"]["value"]
+	$Controls/HungerBar.value = dog.decay_stats["hunger"]["value"]
+	$Controls/EnergyBar.value = dog.decay_stats["energy"]["value"]
+	$Controls/FunBar.value = dog.decay_stats["fun"]["value"]

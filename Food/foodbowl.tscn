@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://7ud6e3sa7p5r"]
 
-[ext_resource type="Script" path="res://foodbowl.gd" id="1_j3bcm"]
+[ext_resource type="Script" path="res://Food/foodbowl.gd" id="1_j3bcm"]
 [ext_resource type="Texture2D" uid="uid://eodmk6i16c56" path="res://PlaceholderArt/matskål/IMG_1149.PNG" id="1_np2p3"]
 [ext_resource type="Texture2D" uid="uid://bfv5hhj78lluo" path="res://PlaceholderArt/matskål/IMG_1150.PNG" id="2_aebg0"]
 [ext_resource type="Texture2D" uid="uid://0mxk23pw5ss3" path="res://PlaceholderArt/matskål/IMG_1154.PNG" id="3_myii5"]
@@ -73,8 +73,8 @@ height = 106.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_s6pi0"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ojlsj"]
-radius = 50.0
-height = 164.0
+radius = 41.0
+height = 200.0
 
 [node name="FoodBowl" type="StaticBody2D"]
 script = ExtResource("1_j3bcm")
@@ -102,13 +102,13 @@ shape = SubResource("CircleShape2D_s6pi0")
 position = Vector2(112, -31)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-111, -13)
+position = Vector2(-111, -11)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_ojlsj")
 
-[node name="DepletionTimer" type="Timer" parent="."]
+[node name="CheckTimer" type="Timer" parent="."]
 wait_time = 0.5
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
-[connection signal="timeout" from="DepletionTimer" to="." method="_on_depletion_timer_timeout"]
+[connection signal="timeout" from="CheckTimer" to="." method="_on_check_timer_timeout"]

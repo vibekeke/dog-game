@@ -1,0 +1,114 @@
+[gd_scene load_steps=15 format=3 uid="uid://cf7v3y0503n06"]
+
+[ext_resource type="Script" path="res://Food/foodbowl.gd" id="1_q4hau"]
+[ext_resource type="Texture2D" uid="uid://eodmk6i16c56" path="res://PlaceholderArt/matskål/IMG_1149.PNG" id="2_vvb0u"]
+[ext_resource type="Texture2D" uid="uid://bfv5hhj78lluo" path="res://PlaceholderArt/matskål/IMG_1150.PNG" id="3_f0rvv"]
+[ext_resource type="Texture2D" uid="uid://0mxk23pw5ss3" path="res://PlaceholderArt/matskål/IMG_1154.PNG" id="4_ongmu"]
+[ext_resource type="Texture2D" uid="uid://bdqwxa1jq8lf" path="res://PlaceholderArt/matskål/IMG_1155.PNG" id="5_7ys1g"]
+[ext_resource type="Texture2D" uid="uid://owfqjv43lpio" path="res://PlaceholderArt/matskål/IMG_1156.PNG" id="6_w6msr"]
+[ext_resource type="Texture2D" uid="uid://cuna84jkfly48" path="res://PlaceholderArt/matskål/IMG_1148.PNG" id="7_wi17h"]
+[ext_resource type="Texture2D" uid="uid://bf4837pxmrnsv" path="res://PlaceholderArt/matskål/IMG_1151.PNG" id="8_sdwy1"]
+[ext_resource type="Texture2D" uid="uid://d2j7hd768md1r" path="res://PlaceholderArt/matskål/IMG_1152.PNG" id="9_tcrbs"]
+[ext_resource type="Texture2D" uid="uid://c1jrappfa6i0k" path="res://PlaceholderArt/matskål/IMG_1153.PNG" id="10_oonad"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7dloa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_vvb0u")
+}],
+"loop": true,
+"name": &"empty",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_f0rvv")
+}],
+"loop": true,
+"name": &"full",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_ongmu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_7ys1g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_w6msr")
+}],
+"loop": true,
+"name": &"full_animated",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_wi17h")
+}],
+"loop": true,
+"name": &"half",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_sdwy1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_tcrbs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_oonad")
+}],
+"loop": true,
+"name": &"half_animated",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wfad1"]
+radius = 28.0
+height = 106.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s6pi0"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ojlsj"]
+radius = 50.0
+height = 164.0
+
+[node name="FoodBowl" type="StaticBody2D"]
+script = ExtResource("1_q4hau")
+
+[node name="BowlSprite2D" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+texture_filter = 1
+position = Vector2(23, 24)
+sprite_frames = SubResource("SpriteFrames_7dloa")
+animation = &"full_animated"
+frame_progress = 0.921685
+offset = Vector2(-26, -81)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+texture_filter = 1
+position = Vector2(-2, -29)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_wfad1")
+
+[node name="BowlAnchorA" type="CollisionShape2D" parent="."]
+position = Vector2(83, -15)
+shape = SubResource("CircleShape2D_s6pi0")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(112, -31)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-111, -13)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_ojlsj")
+
+[node name="DepletionTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
+[connection signal="timeout" from="DepletionTimer" to="." method="_on_depletion_timer_timeout"]
