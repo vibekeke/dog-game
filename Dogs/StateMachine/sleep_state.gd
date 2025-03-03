@@ -14,9 +14,11 @@ func _ready():
 	sleep_timer = Timer.new()
 	sleep_timer.wait_time = 2
 	sleep_timer.timeout.connect(_on_sleep_timer_timeout)
+	add_child(sleep_timer)
 
 func _enter_state() -> void:
 	#remember to enable physics process if necessary.
+	sleep_timer.start()
 	dog.can_move = false
 	dog.sprite.flip_v = true
 	dog.decay_stats["energy"]["decaying"] = false

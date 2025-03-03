@@ -6,6 +6,7 @@ signal debug_button_pressed(type : String, value : float)
 
 #To test functionality - foodbowl etc.
 func _on_foodbutton_pressed() -> void:
+	FoodManager.request_fill_bowl()
 	emit_signal("debug_button_pressed", "food", 0)
 
 func _on_walkbutton_pressed() -> void:

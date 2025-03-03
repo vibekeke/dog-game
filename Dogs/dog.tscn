@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cvuofhgxo0twx"]
+[gd_scene load_steps=11 format=3 uid="uid://cvuofhgxo0twx"]
 
 [ext_resource type="Script" path="res://Dogs/dog.gd" id="1_ipha4"]
 [ext_resource type="Script" path="res://Dogs/StateMachine/state_machine.gd" id="2_je2d1"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://blwwd65qj7rob" path="res://Dogs/Untitled_Artwork.png" id="4_h0tuj"]
 [ext_resource type="Script" path="res://Dogs/StateMachine/idle_state.gd" id="4_p1ps6"]
 [ext_resource type="Script" path="res://Dogs/StateMachine/eat_state.gd" id="5_54gw0"]
+[ext_resource type="Script" path="res://Dogs/StateMachine/goto_food_state.gd" id="6_aho42"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xm03h"]
 animations = [{
@@ -37,9 +38,6 @@ script = ExtResource("1_ipha4")
 [node name="TickTimer" type="Timer" parent="."]
 autostart = true
 
-[node name="IdleTimer" type="Timer" parent="."]
-one_shot = true
-
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("2_je2d1")
 
@@ -51,6 +49,9 @@ script = ExtResource("4_p1ps6")
 
 [node name="EatState" type="Node" parent="StateMachine"]
 script = ExtResource("5_54gw0")
+
+[node name="GotoFoodState" type="Node" parent="StateMachine"]
+script = ExtResource("6_aho42")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

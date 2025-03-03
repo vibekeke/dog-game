@@ -9,25 +9,27 @@ var state_name = "idle"
 @onready var tick_timer = $"../../TickTimer"
 @onready var state_machine = $".."
 
-@onready var idle_timer = $"../../IdleTimer"
-
 var move_frequency = 5 #max amount of wait time.
 var min_distance = 80
 var max_distance = 300
 
+var idle_timer
 
 func _ready():
 	set_physics_process(false)
-	idle_timer.wait_time = 4
-	idle_timer.start()
 	
+	idle_timer = Timer.new()
+	idle_timer.wait_time = 4
 	idle_timer.timeout.connect(on_idle_timer_timeout)
+	add_child(idle_timer)
 	
 
 func _enter_state() -> void:
+	idle_timer.start()
 	pass
 	
 func _exit_state() -> void:
+	idle_timer.stop()
 	pass
 
 

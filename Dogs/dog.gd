@@ -10,7 +10,12 @@ var move_multiplier = 1.0 #should be affected by moods and personality UwU
 var target_position = Vector2()
 var target_vector = Vector2()
 var sceen_size
+
 var can_move = true
+var can_pet = true
+var can_sleep = true
+var can_eat = true
+
 var last_position = Vector2()
 
 var stat_max = 120
@@ -185,7 +190,7 @@ func tween_bounce():
 func _on_debug_stats_debug_button_pressed(type: String, value: float) -> void:
 	match type:
 		"food":
-			state_machine.request_state("eat")
+			state_machine.request_state("goto_food")
 		"walk":
 			return
 		"shower":

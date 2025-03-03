@@ -7,6 +7,7 @@ extends Node
 @onready var sleep_state = $SleepState
 @onready var idle_state = $IdleState
 @onready var eat_state = $EatState
+@onready var goto_food_state = $GotoFoodState
 
 var current_state : State
 
@@ -26,7 +27,7 @@ func _check_stats():
 		poop()
 	
 	
-	if dog.get_stat("energy") < 50 and current_state != eat_state:
+	if dog.get_stat("energy") < 50 and dog.can_sleep:
 		change_state(sleep_state)
 
 
@@ -56,6 +57,8 @@ func request_state(new_state: String):
 			change_state(idle_state)
 		"eat":
 			change_state(eat_state)
+		"goto_food":
+			change_state(goto_food_state)
 		_:
 			print("WARNING: Unknown state requested!")
 
