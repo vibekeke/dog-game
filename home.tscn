@@ -40,12 +40,15 @@ bowl_name = "A"
 
 [node name="Dog2" parent="." instance=ExtResource("5_6eess")]
 position = Vector2(190, 355)
+dog_name = "Dog2"
 
 [node name="Dog3" parent="." instance=ExtResource("5_6eess")]
 position = Vector2(394, 413)
+dog_name = "Dog3"
 
 [node name="Dog4" parent="." instance=ExtResource("5_6eess")]
 position = Vector2(240, 491)
+dog_name = "Dog4"
 
 [node name="FoodBowl2" parent="." instance=ExtResource("8_s1el2")]
 position = Vector2(318, 119)

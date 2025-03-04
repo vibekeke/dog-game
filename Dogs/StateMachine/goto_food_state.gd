@@ -33,7 +33,7 @@ func _exit_state() -> void:
 	#dog.set_physics_process(true)
 	#set_physics_process(false)
 	dog.target_position = dog.global_position
-	dog.can_sleep = false
+	dog.can_sleep = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:

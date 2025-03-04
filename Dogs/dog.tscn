@@ -35,7 +35,12 @@ height = 118.0
 [node name="Dog" type="CharacterBody2D"]
 script = ExtResource("1_ipha4")
 
+[node name="DebugTimer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
 [node name="TickTimer" type="Timer" parent="."]
+wait_time = 0.5
 autostart = true
 
 [node name="StateMachine" type="Node" parent="."]

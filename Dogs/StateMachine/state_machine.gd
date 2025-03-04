@@ -11,6 +11,7 @@ extends Node
 
 var current_state : State
 
+@onready var debug_timer = $"../DebugTimer"
 
 
 signal pooped(poop_position)
@@ -20,15 +21,18 @@ func _ready() -> void:
 	change_state(idle_state)
 	tick_timer.wait_time = 1
 	tick_timer.timeout.connect(_check_stats)
+	debug_timer.timeout.connect(_on_debug_timer_timeout)
 	
 	FoodManager.new_food_available.connect(_on_new_food_available)
 
 func _check_stats():
+	print(dog.dog_name + " can sleep: " + str(dog.can_sleep))
 	if dog.get_stat("poop_level") < 40 and Global.poop_enabled:
 		poop()
 	
 	if FoodManager.available_foods.size() > 0 and dog.get_stat("hunger") <= 110 and dog.can_eat:
 		change_state(goto_food_state)
+		
 	if dog.get_stat("energy") < 50 and dog.can_sleep:
 		change_state(sleep_state)
 
@@ -55,9 +59,14 @@ func poop():
 	
 	Global.create_poop(poop_position)
 
+func reset_state():
+	change_state(idle_state)
+	_check_stats()
 
 func request_state(new_state: String):
 	match new_state:
+		"reset":
+			reset_state()
 		"idle":
 			change_state(idle_state)
 		"eat":
@@ -77,3 +86,6 @@ func change_state(new_state: State):
 		new_state._enter_state()
 		print("New state: " + new_state.state_name)
 	current_state = new_state
+
+func _on_debug_timer_timeout():
+	print(dog.dog_name + ", current state: " +  current_state.state_name)

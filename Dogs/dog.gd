@@ -4,6 +4,7 @@ extends CharacterBody2D
 @onready var tick_timer = $TickTimer
 @onready var state_machine = $StateMachine
 
+@export var dog_name : String = "Dog"
 
 var move_speed = 300
 var move_multiplier = 1.0 #should be affected by moods and personality UwU

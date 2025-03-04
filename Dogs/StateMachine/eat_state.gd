@@ -29,6 +29,7 @@ func _enter_state() -> void:
 	eat_timer.start()
 	dog.can_move = false
 	dog.can_eat = false #we dont want dog to go eat something else while already eating
+	dog.can_sleep = false
 	dog.decay_stats["hunger"]["decaying"] = false
 	dog.decay_stats["hunger"]["increasing"] = true
 	
@@ -37,13 +38,13 @@ func _enter_state() -> void:
 func _exit_state() -> void:
 	eat_timer.stop()
 	dog.can_move = true
+	dog.can_eat = true
+	dog.can_sleep = true
 	dog.decay_stats["hunger"]["decaying"] = true
 	dog.decay_stats["hunger"]["increasing"] = false
 	
 	dog.multipliers["poop_level"]["decay_multiplier"] -= 0.3
 	#Will exit when finished eating, duhh.
-	dog.can_sleep = true
-	dog.can_eat = true
 
 func stop_eating():
 	state_machine.request_state("idle")

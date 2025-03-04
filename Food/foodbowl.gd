@@ -42,7 +42,7 @@ func state_empty():
 	print("bowl emptied")
 	current_state = "empty_bowl"
 	for dog in eating_dogs:
-		dog.state_machine.request_state("idle")
+		dog.state_machine.request_state("reset")
 	eating_dogs.clear()
 	
 	update_still_animation()
@@ -101,6 +101,7 @@ func _on_area_2d_area_exited(area: Area2D) -> void:
 	registered_dogs.erase(dog)
 	if dog in eating_dogs:
 		eating_dogs.erase(dog)
+		dog.state_machine.request_state("reset")
 
 
 
