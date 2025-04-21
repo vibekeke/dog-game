@@ -1,11 +1,11 @@
 [gd_scene load_steps=11 format=3 uid="uid://cvuofhgxo0twx"]
 
-[ext_resource type="Script" path="res://Dogs/dog.gd" id="1_ipha4"]
-[ext_resource type="Script" path="res://Dogs/StateMachine/state_machine.gd" id="2_je2d1"]
-[ext_resource type="Script" path="res://Dogs/StateMachine/sleep_state.gd" id="3_i35uo"]
-[ext_resource type="Script" path="res://Dogs/StateMachine/idle_state.gd" id="4_p1ps6"]
-[ext_resource type="Script" path="res://Dogs/StateMachine/eat_state.gd" id="5_54gw0"]
-[ext_resource type="Script" path="res://Dogs/StateMachine/goto_food_state.gd" id="6_aho42"]
+[ext_resource type="Script" uid="uid://iot03mtp71y8" path="res://Dogs/dog.gd" id="1_ipha4"]
+[ext_resource type="Script" uid="uid://c0bqxcglr4g3w" path="res://Dogs/StateMachine/state_machine.gd" id="2_je2d1"]
+[ext_resource type="Script" uid="uid://c2ya5lhhrqxy" path="res://Dogs/StateMachine/sleep_state.gd" id="3_i35uo"]
+[ext_resource type="Script" uid="uid://bxyr3gppiws85" path="res://Dogs/StateMachine/idle_state.gd" id="4_p1ps6"]
+[ext_resource type="Script" uid="uid://7by2dy8pc0e" path="res://Dogs/StateMachine/eat_state.gd" id="5_54gw0"]
+[ext_resource type="Script" uid="uid://b0wk4i8jk6e8k" path="res://Dogs/StateMachine/goto_food_state.gd" id="6_aho42"]
 [ext_resource type="Texture2D" uid="uid://ddw23lsqfvn4s" path="res://Dogs/Dog Sprites/Illustration4.png" id="7_5o3ao"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xm03h"]
@@ -85,5 +85,5 @@ position = Vector2(-2, -33)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_uy51d")
 
-[connection signal="pressed" from="DogButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="DogButton" to="." method="_on_dog_button_pressed"]
+[connection signal="pressed" from="DogButton" to="." method="_on_button_pressed"]

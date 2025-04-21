@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://q2sh5tdallp5"]
 
-[ext_resource type="Script" path="res://Dogs/dog_v0.gd" id="1_hdxns"]
+[ext_resource type="Script" uid="uid://df5hv2ggaf3f0" path="res://Dogs/dog_v0.gd" id="1_hdxns"]
 [ext_resource type="Texture2D" uid="uid://ddw23lsqfvn4s" path="res://Dogs/Dog Sprites/Illustration4.png" id="2_bi77m"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xm03h"]
