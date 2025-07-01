@@ -4,6 +4,7 @@ extends CharacterBody2D
 @onready var tick_timer = $TickTimer
 @onready var state_machine = $StateMachine
 
+
 @export var dog_name : String = "Dog"
 
 var move_speed = 300
@@ -22,7 +23,6 @@ var last_position = Vector2()
 
 var stat_max = 120
 
-signal pooped
 signal stats_updated(dog) #TODO: HUD will fetch stats from DogManager, not the dog script!
 signal stat_increased(dog, stat: String) #For visual effects purposes (EffectsLayer!)
 signal stat_decreased(dog, stat: String) #For visual effects purposes (EffectsLayer!)
@@ -193,6 +193,27 @@ func tween_bounce():
 	tween.tween_property(self, "scale", Vector2(0.9, 0.9), 0.1)
 	tween.tween_property(self, "scale", Vector2(1.1, 1.1), 0.1)
 	tween.tween_property(self, "scale", Vector2(1, 1), 0.1)
+
+
+func poop():
+	tween_bounce()
+	change_stat("poop_level", 100)
+	
+	#TODO: Could create a spawn point for the poop later, but this is ok
+	var random_x = randi_range(-10, 10)
+	var random_y = randi_range(-10, 10)
+	
+	var poop_position = position + Vector2(random_x, random_y)
+	
+	if sprite.flip_h:
+		poop_position +=  Vector2(-80, 5)
+	else:
+		poop_position += Vector2(80, 5)
+	
+	var poop = preload("res://Dogs/poop.tscn").instantiate()
+	poop.global_position = poop_position
+	get_tree().current_scene.add_child(poop)
+	poop.add_to_group("poop")
 
 
 ##DEBUG BUTTONS

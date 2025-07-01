@@ -1,11 +1,11 @@
 [gd_scene load_steps=11 format=3 uid="uid://cvuofhgxo0twx"]
 
-[ext_resource type="Script" path="res://Dogs/dog.gd" id="1_ipha4"]
-[ext_resource type="Script" path="res://Dogs/StateMachine/state_machine.gd" id="2_je2d1"]
-[ext_resource type="Script" path="res://Dogs/StateMachine/sleep_state.gd" id="3_i35uo"]
-[ext_resource type="Script" path="res://Dogs/StateMachine/idle_state.gd" id="4_p1ps6"]
-[ext_resource type="Script" path="res://Dogs/StateMachine/eat_state.gd" id="5_54gw0"]
-[ext_resource type="Script" path="res://Dogs/StateMachine/goto_food_state.gd" id="6_aho42"]
+[ext_resource type="Script" uid="uid://byn2mhu0mksil" path="res://Dogs/dog.gd" id="1_ipha4"]
+[ext_resource type="Script" uid="uid://qwqi12e0tthw" path="res://Dogs/StateMachine/state_machine.gd" id="2_je2d1"]
+[ext_resource type="Script" uid="uid://bnbh0g7cx2dse" path="res://Dogs/StateMachine/sleep_state.gd" id="3_i35uo"]
+[ext_resource type="Script" uid="uid://csu5p6vcr4qq1" path="res://Dogs/StateMachine/idle_state.gd" id="4_p1ps6"]
+[ext_resource type="Script" uid="uid://bwf2ns725og45" path="res://Dogs/StateMachine/eat_state.gd" id="5_54gw0"]
+[ext_resource type="Script" uid="uid://rps0tnmlmf8b" path="res://Dogs/StateMachine/goto_food_state.gd" id="6_aho42"]
 [ext_resource type="Texture2D" uid="uid://ddw23lsqfvn4s" path="res://Dogs/Dog Sprites/Illustration4.png" id="7_5o3ao"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xm03h"]
