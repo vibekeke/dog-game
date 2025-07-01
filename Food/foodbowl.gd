@@ -18,16 +18,14 @@ signal food_entered(food, dog)
 func _ready() -> void:
 	update_still_animation()
 	$BowlSprite2D.play()
-	
-	FoodManager.fill_bowl_requested.connect(fill_bowl)	#TODO: This will obviously be changed.
-
 
 
 func fill_bowl() -> void:
 	bowl_fullness = 7
 	state_full()
 	check_eating_dogs()
-	FoodManager.register_food(self)
+	add_to_group("food")
+	Global.emit_signal("new_food_available")
 	for dog in registered_dogs:
 		emit_signal("food_entered", self, dog)
 
@@ -46,7 +44,7 @@ func state_empty():
 	eating_dogs.clear()
 	
 	update_still_animation()
-	FoodManager.deregister_food(self)
+	remove_from_group("food")
 
 
 

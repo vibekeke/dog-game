@@ -21,16 +21,17 @@ func _ready() -> void:
 	tick_timer.timeout.connect(_check_stats)
 	debug_timer.timeout.connect(_on_debug_timer_timeout)
 	
-	FoodManager.new_food_available.connect(_on_new_food_available)
+	Global.new_food_available.connect(_on_new_food_available)
 
 func _check_stats():
 	print(dog.dog_name + " can sleep: " + str(dog.can_sleep))
 	if dog.get_stat("poop_level") < 40 and Global.can_poop():
 		dog.poop()
 	
-	if FoodManager.available_foods.size() > 0 and dog.get_stat("hunger") <= 110 and dog.can_eat:
-		change_state(goto_food_state)
-		
+	if dog.get_stat("hunger") <= 110 and dog.can_eat:
+		if get_tree().get_nodes_in_group("food").size() > 0:
+			change_state(goto_food_state)
+
 	if dog.get_stat("energy") < 50 and dog.can_sleep:
 		change_state(sleep_state)
 

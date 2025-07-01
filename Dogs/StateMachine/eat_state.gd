@@ -52,5 +52,5 @@ func stop_eating():
 func _on_eat_timer_timeout():
 	if dog.get_stat("hunger") >= 120:
 		state_machine.request_state("idle")
-	if FoodManager.available_foods.size() < 1:
+	if get_tree().get_nodes_in_group("food").size() < 1:
 		state_machine.request_state("idle")

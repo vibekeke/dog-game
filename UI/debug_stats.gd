@@ -3,10 +3,14 @@ extends CanvasLayer
 
 signal debug_button_pressed(type : String, value : float)
 
+@onready var bowl1 = $"../FoodBowl"
+@onready var bowl2 = $"../FoodBowl2"
+
 
 #To test functionality - foodbowl etc.
 func _on_foodbutton_pressed() -> void:
-	FoodManager.request_fill_bowl()
+	bowl1.fill_bowl()
+	bowl2.fill_bowl()
 	emit_signal("debug_button_pressed", "food", 0)
 
 func _on_walkbutton_pressed() -> void:

@@ -3,6 +3,8 @@ extends Node
 var move_enabled = true
 var poop_enabled = true
 
+signal new_food_available
+
 const MAX_POOPS = 20
 
 func can_poop():
