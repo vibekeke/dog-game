@@ -27,7 +27,7 @@ signal stats_updated(dog) #TODO: HUD will fetch stats from DogManager, not the d
 signal stat_increased(dog, stat: String) #For visual effects purposes (EffectsLayer!)
 signal stat_decreased(dog, stat: String) #For visual effects purposes (EffectsLayer!)
 
-
+#TODO: increasing and gain_speed variables are redundant and unnecessary.
 var decay_stats = {
 	"hunger" : {"value" : 70, "decaying" : true, "increasing" : false},
 	"energy" : {"value" : 70, "decaying" : true, "increasing" : false},
