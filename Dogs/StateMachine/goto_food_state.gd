@@ -43,7 +43,7 @@ func search_for_food():
 	if dog.get_stat("hunger") >= 120:
 		state_machine.request_state("idle")
 	
-	if FoodManager.available_foods.size() > 0:
+	if get_tree().get_nodes_in_group("food").size() > 0:
 		target_food = find_closest_food()
 		dog.target_position = target_food.global_position
 	else:
@@ -65,7 +65,7 @@ func find_closest_food():
 	var closest_food = null
 	var closest_distance = INF
 	
-	for food in FoodManager.available_foods:
+	for food in get_tree().get_nodes_in_group("food"):
 		var distance = dog.global_position.distance_to(food.global_position)
 		if distance < closest_distance:
 			closest_food = food

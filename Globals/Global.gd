@@ -3,9 +3,9 @@ extends Node
 var move_enabled = true
 var poop_enabled = true
 
-signal dog_pooped(poop_position)
+signal new_food_available
 
-func create_poop(poop_position):
-	if poop_enabled:
-		print("Created poop")
-		emit_signal("dog_pooped", poop_position)
+const MAX_POOPS = 20
+
+func can_poop():
+	return poop_enabled and get_tree().get_nodes_in_group("poop").size() < MAX_POOPS

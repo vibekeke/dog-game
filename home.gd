@@ -1,7 +1,6 @@
 extends Node2D
 
 var tiny_hearts = load("res://Effects/tiny_hearts.tscn")
-var poop = load("res://Dogs/poop.tscn")
 
 var active_dogs = []
 @onready var dog1 = $Dog
@@ -11,39 +10,12 @@ var active_dogs = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	Global.dog_pooped.connect(_on_dog_pooped)
 	active_dogs = [dog1, dog2, dog3, dog4]	
 	for dog in active_dogs:
 		dog.stat_increased.connect(_on_dog_stat_increased)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
-
-
-
-#POOPING
-func _on_dog_pooped(poop_position):
-	var poop_instance = poop.instantiate()
-	self.add_child(poop_instance)
-	poop_instance.global_position = poop_position
-
-#func _on_dog_time_to_poop() -> void:
-	#print("Should have pooped!")
-	#var random_x = randi_range(-10, 10)
-	#var random_y = randi_range(-10, 10)
-	#var poop_instance = poop.instantiate()
-	#var poop_position = $Dog.global_position + Vector2(random_x, random_y) #Might have to get the dog somehow
-	#var poop_direction = $Dog/AnimatedSprite2D.flip_h
-	#
-	#if poop_direction == false:
-		#poop_position == Vector2(80, -10)
-	#else:
-		#poop_position -= Vector2(80, 10)
-	#
-	#
-	#self.add_child(poop_instance)
-	#poop_instance.global_position = poop_position
-#
 
 
 #Spawns tiny hearts whenever love increases.

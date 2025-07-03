@@ -21,15 +21,15 @@ func _enter_state() -> void:
 	sleep_timer.start()
 	dog.can_move = false
 	dog.sprite.flip_v = true
-	dog.decay_stats["energy"]["decaying"] = false
-	dog.decay_stats["energy"]["increasing"] = true
+	dog.needs["energy"]["decaying"] = false
+	dog.needs["energy"]["increasing"] = true
 
 func _exit_state():
 	sleep_timer.stop()
 	dog.can_move = true
 	dog.sprite.flip_v = false
-	dog.decay_stats["energy"]["decaying"] = true
-	dog.decay_stats["energy"]["increasing"] = false
+	dog.needs["energy"]["decaying"] = true
+	dog.needs["energy"]["increasing"] = false
 
 func _on_sleep_timer_timeout():
 	#TODO: if food is nearby

@@ -61,6 +61,6 @@ func _on_dog_stats_updated(dog) -> void:
 		$LoveLabel.text = "MAX"
 		$Heart.scale = Vector2(0.5, 0.5)
 
-	$Controls/HungerBar.value = dog.decay_stats["hunger"]["value"]
-	$Controls/EnergyBar.value = dog.decay_stats["energy"]["value"]
-	$Controls/FunBar.value = dog.decay_stats["fun"]["value"]
+	$Controls/HungerBar.value = dog.needs["hunger"]["value"]
+	$Controls/EnergyBar.value = dog.needs["energy"]["value"]
+	$Controls/FunBar.value = dog.needs["fun"]["value"]

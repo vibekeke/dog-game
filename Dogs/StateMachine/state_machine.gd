@@ -10,58 +10,43 @@ extends Node
 @onready var goto_food_state = $GotoFoodState
 
 var current_state : State
+var isBusy = false #Use this during key animations/states you don't want interruptable
 
 @onready var debug_timer = $"../DebugTimer"
 
-
-signal pooped(poop_position)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	change_state(idle_state)
 	tick_timer.wait_time = 1
-	tick_timer.timeout.connect(_check_stats)
+	tick_timer.timeout.connect(_check_conditions)
 	debug_timer.timeout.connect(_on_debug_timer_timeout)
 	
-	FoodManager.new_food_available.connect(_on_new_food_available)
+	Global.new_food_available.connect(_on_new_food_available)
 
-func _check_stats():
-	print(dog.dog_name + " can sleep: " + str(dog.can_sleep))
-	if dog.get_stat("poop_level") < 40 and Global.poop_enabled:
-		poop()
+func _check_conditions():
+	if isBusy:
+		return
+
+	if dog.get_stat("poop_level") < 40 and Global.can_poop():
+		dog.poop()
 	
-	if FoodManager.available_foods.size() > 0 and dog.get_stat("hunger") <= 110 and dog.can_eat:
-		change_state(goto_food_state)
-		
+	if dog.get_stat("hunger") <= 110 and dog.can_eat:
+		if get_tree().get_nodes_in_group("food").size() > 0:
+			change_state(goto_food_state)
+
 	if dog.get_stat("energy") < 50 and dog.can_sleep:
 		change_state(sleep_state)
+	
 
 func _on_new_food_available():
-	_check_stats()
+	_check_conditions()
 	pass
 
 
-func poop():
-	print("dog pooped")
-	dog.tween_bounce()
-	dog.change_stat("poop_level", 100)
-	
-	#TODO: Might create a spawn point for the poop later, but this is ok
-	var random_x = randi_range(-10, 10)
-	var random_y = randi_range(-10, 10)
-	
-	var poop_position = dog.position + Vector2(random_x, random_y)
-	
-	if dog.sprite.flip_h:
-		poop_position +=  Vector2(-80, 5)
-	else:
-		poop_position += Vector2(80, 5)
-	
-	Global.create_poop(poop_position)
-
 func reset_state():
 	change_state(idle_state)
-	_check_stats()
+	_check_conditions()
 
 func request_state(new_state: String):
 	match new_state:

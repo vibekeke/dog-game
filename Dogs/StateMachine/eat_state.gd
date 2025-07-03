@@ -30,20 +30,21 @@ func _enter_state() -> void:
 	dog.can_move = false
 	dog.can_eat = false #we dont want dog to go eat something else while already eating
 	dog.can_sleep = false
-	dog.decay_stats["hunger"]["decaying"] = false
-	dog.decay_stats["hunger"]["increasing"] = true
+	dog.needs["hunger"]["decaying"] = false
+	dog.needs["hunger"]["increasing"] = true
 	
-	dog.multipliers["poop_level"]["decay_multiplier"] += 0.3
+	
+	dog.needs["poop_level"]["decay_rate"] += 0.3
 	
 func _exit_state() -> void:
 	eat_timer.stop()
 	dog.can_move = true
 	dog.can_eat = true
 	dog.can_sleep = true
-	dog.decay_stats["hunger"]["decaying"] = true
-	dog.decay_stats["hunger"]["increasing"] = false
+	dog.needs["hunger"]["decaying"] = true
+	dog.needs["hunger"]["increasing"] = false
 	
-	dog.multipliers["poop_level"]["decay_multiplier"] -= 0.3
+	dog.needs["poop_level"]["decay_rate"] -= 0.3
 	#Will exit when finished eating, duhh.
 
 func stop_eating():
@@ -52,5 +53,5 @@ func stop_eating():
 func _on_eat_timer_timeout():
 	if dog.get_stat("hunger") >= 120:
 		state_machine.request_state("idle")
-	if FoodManager.available_foods.size() < 1:
+	if get_tree().get_nodes_in_group("food").size() < 1:
 		state_machine.request_state("idle")

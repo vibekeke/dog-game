@@ -28,61 +28,33 @@ signal stat_increased(dog, stat: String) #For visual effects purposes (EffectsLa
 signal stat_decreased(dog, stat: String) #For visual effects purposes (EffectsLayer!)
 
 #TODO: increasing and gain_speed variables are redundant and unnecessary.
-var needs = {
-	"hunger" : {
-		"value" : 70, 
-		"decaying" : true, 
-		"decay_rate" : 0.007,
-		"base_decay_rate" : 0.007,
-		"increasing" : false,
-		"gain_rate" : 2,
-		"base_gain_rate" : 2
-	},
-	"energy" : {
-		"value" : 70, 
-		"decaying" : true, 
-		"decay_rate" : 0.007,
-		"base_decay_rate" : 0.007,
-		"increasing" : false,
-		"gain_rate" : 1,
-		"base_gain_rate" : 1},
-	"fun" : {
-		"value" : 70, 
-		"decaying" : true, 
-		"decay_rate" : 0.007,
-		"base_decay_rate" : 0.007,
-		"increasing" : false,
-		"gain_rate" : 0,
-		"base_gain_rate" : 0},
+var decay_stats = {
+	"hunger" : {"value" : 70, "decaying" : true, "increasing" : false},
+	"energy" : {"value" : 70, "decaying" : true, "increasing" : false},
+	"fun" : {"value" : 70, "decaying" : true, "increasing" : false},
 	#Hidden  stats
-	"poop_level" : {
-		"value" : 70, 
-		"decaying" : true, 
-		"decay_rate" : 0.01,
-		"base_decay_rate" : 0.01,
-		"increasing" : false,
-		"gain_rate" : 0,
-		"base_gain_rate" : 0
-		},
-	"hygiene" : {
-		"value" : 70, 
-		"decaying" : true, 
-		"decay_rate" : 0.003,
-		"base_decay_rate" : 0.003,
-		"increasing" : false,
-		"gain_rate" : 0,
-		"base_gain_rate" : 0
-		},
-	#Hidden bad stats (low = good)
-	"stress" : {
-		"value" : 70, 
-		"decaying" : true, 
-		"decay_rate" : 0.01,
-		"base_decay_rate" : 0.01,
-		"increasing" : false,
-		"gain_rate" : 0,
-		"base_gain_rate" : 0},
+	"poop_level" : {"value" : 100, "decaying" : true, "increasing" : false},
+	"hygiene" : {"value" : 100, "decaying" : true, "increasing" : false},
+	"social" : {"value" : 100, "decaying" : true, "increasing" : false},
+	#Hidden bad stats
+	"stress" : {"value" : 0, "decaying" : true, "increasing" : false},
+	"fatigue" : {"value": 0, "decaying" : true, "increasing" : false},
 }
+
+var multipliers = {
+	"hunger" : {"decay_speed" : 0.007, "pers_multiplier" : 1.0, "decay_multiplier" : 1.0, "gain_speed" : 1.0, "gain_multiplier" : 1.0},
+	"energy" : {"decay_speed" : 0.007, "pers_multiplier" : 1.0, "decay_multiplier" : 1.0, "gain_speed" : 0.5, "gain_multiplier" : 1.0},
+	"fun" : {"decay_speed" : 0.007, "pers_multiplier" : 1.0, "decay_multiplier" : 1.0,"gain_speed" : 1.0, "gain_multiplier" : 1.0},
+	#Hidden stats
+	"poop_level" : {"decay_speed" : 0.01, "pers_multiplier" : 1.0, "decay_multiplier" : 1.0, "gain_speed" : 1.0, "gain_multiplier" : 1.0},
+	"hygiene" : {"decay_speed" : 0.003, "pers_multiplier" : 1.0, "decay_multiplier" : 1.0, "gain_speed" : 1.0, "gain_multiplier" : 1.0},
+	"social" : {"decay_speed" : 0.002, "pers_multiplier" : 1.0, "decay_multiplier" : 1.0, "gain_speed" : 1.0, "gain_multiplier" : 1.0},
+	#Hidden bad stats
+	"stress" : {"decay_speed" : 0.01, "pers_multiplier" : 1.0, "decay_multiplier" : 1.0, "gain_speed" : 1.0, "gain_multiplier" : 1.0},
+	"fatigue" : {"decay_speed" : 0.01, "pers_multiplier" : 1.0, "decay_multiplier" : 1.0, "gain_speed" : 1.0, "gain_multiplier" : 1.0},
+}
+
+
 
 ##Long term stats
 var love = 0
@@ -113,7 +85,7 @@ func frequent_poop_rate():
 	#for youtube shorts! :3
 	var rand = randi_range(50, 80)
 	set_stat("poop_level", rand)
-	needs["poop_level"]["decay_speed"] = rand / 40
+	multipliers["poop_level"]["decay_speed"] = rand / 40
 
 func _physics_process(delta):
 	if position.distance_to(target_position) > 50 and can_move:
@@ -169,14 +141,13 @@ func _on_time_updated(time_passed):
 		handle_long_awaytime()
 	#No else statement yet cause I don't know how to handle the long awaytime lamayo
 	
-	for key in needs:
-		var stat = needs[key] #opens the stat dictionary
+	for key in decay_stats:
+		var stat = decay_stats[key] #opens the stat dictionary
 		if stat["decaying"]:
-			change_stat(key, - time_passed * needs[key]["decay_rate"])
-		if needs[key]["increasing"]:
-			change_stat(key, time_passed * needs[key]["gain_rate"])
-			emit_signal("stat_increased",self, key)
-	
+			var decay_amount = -((multipliers[key]["pers_multiplier"] + multipliers[key]["decay_multiplier"]) / 2) * multipliers[key]["decay_speed"]
+			change_stat(key, time_passed * decay_amount)
+				
+				
 	#TODO: stats always decay (decaying = true), this will change based on state machines so they dont get tired while eating etc :3
 	emit_signal("stats_updated", self)	#TODO: Remove parameters in favor of DogManager
 
@@ -187,20 +158,29 @@ func handle_long_awaytime():
 	pass
 
 func _on_tick_timer_timeout():
-	#Dunno if there should really be stuff in here or if it should all be handled elsewhere.
-	pass
+	for key in decay_stats:
+		if decay_stats[key]["increasing"]:
+			#print("increasing: " + key)
+			var gain_amount = (multipliers[key]["gain_multiplier"]) * multipliers[key]["gain_speed"]
+			change_stat(key, gain_amount)
+			emit_signal("stat_increased",self, key)
+	emit_signal("stats_updated", self)
 
 
 func set_stat(stat_name: String, value):
-	needs[stat_name]["value"] = value
-	needs[stat_name]["value"] = clamp(needs[stat_name]["value"], 0, 120)
+	decay_stats[stat_name]["value"] = value
+	decay_stats[stat_name]["value"] = clamp(decay_stats[stat_name]["value"], 0, 120)
 	
 func change_stat(stat_name: String, value):
-	needs[stat_name]["value"] += value
-	needs[stat_name]["value"] = clamp(needs[stat_name]["value"], 0, 120)
+	decay_stats[stat_name]["value"] += value
+	decay_stats[stat_name]["value"] = clamp(decay_stats[stat_name]["value"], 0, 120)
 
 func get_stat(stat_name : String):
-	return needs[stat_name]["value"]
+	return decay_stats[stat_name]["value"]
+
+func get_stat_type(stat_name : String, type):
+	return decay_stats[stat_name]["value"]
+
 
 
 ##Petting logic
