@@ -173,6 +173,9 @@ func _on_time_updated(time_passed):
 		var stat = needs[key] #opens the stat dictionary
 		if stat["decaying"]:
 			change_stat(key, - time_passed * needs[key]["decay_rate"])
+		if needs[key]["increasing"]:
+			change_stat(key, time_passed * needs[key]["gain_rate"])
+			emit_signal("stat_increased",self, key)
 	
 	#TODO: stats always decay (decaying = true), this will change based on state machines so they dont get tired while eating etc :3
 	emit_signal("stats_updated", self)	#TODO: Remove parameters in favor of DogManager
@@ -184,13 +187,8 @@ func handle_long_awaytime():
 	pass
 
 func _on_tick_timer_timeout():
-	for key in needs:
-		if needs[key]["increasing"]:
-			print("increasing: " + key)
-			print("current stat: " + str(needs[key]["value"]))
-			change_stat(key, needs[key]["gain_rate"])
-			emit_signal("stat_increased",self, key)
-	emit_signal("stats_updated", self)
+	#Dunno if there should really be stuff in here or if it should all be handled elsewhere.
+	pass
 
 
 func set_stat(stat_name: String, value):

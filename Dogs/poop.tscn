@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://4c1i4d60uvic"]
 
-[ext_resource type="Script" path="res://Dogs/poop.gd" id="1_6o603"]
+[ext_resource type="Script" uid="uid://ecmx64khd3vn" path="res://Dogs/poop.gd" id="1_6o603"]
 [ext_resource type="Texture2D" uid="uid://c521gep0ne18a" path="res://PlaceholderArt/Poop1.PNG" id="1_srghf"]
 [ext_resource type="Texture2D" uid="uid://bcawr0hljuwi8" path="res://PlaceholderArt/poop2.PNG" id="2_q1a1t"]
 

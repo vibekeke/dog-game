@@ -25,18 +25,14 @@ scale = Vector2(0.667035, 0.667035)
 texture = ExtResource("3_awkx2")
 offset = Vector2(0, -226.375)
 
-[node name="Dog" parent="." instance=ExtResource("5_6eess")]
-position = Vector2(349, 232)
-
 [node name="HUD" parent="." instance=ExtResource("5_q31hy")]
 
 [node name="EffectsLayer" parent="." instance=ExtResource("6_v8hit")]
 
-[node name="FoodBowl" parent="." instance=ExtResource("8_s1el2")]
-position = Vector2(161, 783)
-bowl_name = "A"
-
 [node name="DebugStats" parent="." instance=ExtResource("8_1d0nl")]
+
+[node name="Dog" parent="." instance=ExtResource("5_6eess")]
+position = Vector2(349, 232)
 
 [node name="Dog2" parent="." instance=ExtResource("5_6eess")]
 position = Vector2(190, 355)
@@ -49,6 +45,10 @@ dog_name = "Dog3"
 [node name="Dog4" parent="." instance=ExtResource("5_6eess")]
 position = Vector2(240, 491)
 dog_name = "Dog4"
+
+[node name="FoodBowl" parent="." instance=ExtResource("8_s1el2")]
+position = Vector2(161, 783)
+bowl_name = "A"
 
 [node name="FoodBowl2" parent="." instance=ExtResource("8_s1el2")]
 position = Vector2(318, 119)

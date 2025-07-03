@@ -10,6 +10,7 @@ extends Node
 @onready var goto_food_state = $GotoFoodState
 
 var current_state : State
+var isBusy = false #Use this during key animations/states you don't want interruptable
 
 @onready var debug_timer = $"../DebugTimer"
 
@@ -18,13 +19,15 @@ var current_state : State
 func _ready() -> void:
 	change_state(idle_state)
 	tick_timer.wait_time = 1
-	tick_timer.timeout.connect(_check_stats)
+	tick_timer.timeout.connect(_check_conditions)
 	debug_timer.timeout.connect(_on_debug_timer_timeout)
 	
 	Global.new_food_available.connect(_on_new_food_available)
 
-func _check_stats():
-	print(dog.dog_name + " can sleep: " + str(dog.can_sleep))
+func _check_conditions():
+	if isBusy:
+		return
+
 	if dog.get_stat("poop_level") < 40 and Global.can_poop():
 		dog.poop()
 	
@@ -34,15 +37,16 @@ func _check_stats():
 
 	if dog.get_stat("energy") < 50 and dog.can_sleep:
 		change_state(sleep_state)
+	
 
 func _on_new_food_available():
-	_check_stats()
+	_check_conditions()
 	pass
 
 
 func reset_state():
 	change_state(idle_state)
-	_check_stats()
+	_check_conditions()
 
 func request_state(new_state: String):
 	match new_state:
